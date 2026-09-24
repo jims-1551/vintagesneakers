@@ -1,8 +1,76 @@
 import { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState('');
+  // 1. DITO ILAGAY ANG MGA LOGIN STATES (Line 6)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // 2. DITO ILAGAY ANG LOGIN GATEKEEPER (Bago mag-return)
+  if (!isLoggedIn) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.loginWrap}>
+          <View style={styles.loginCard}>
+            <Text style={styles.logoBadge}>VS</Text>
+            <Text style={styles.title}>Vintage Store</Text>
+            <Text style={styles.subtitle}>Sign in to access exclusive drops</Text>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>Email</Text>
+              <TextInput
+                style={styles.loginInput}
+                placeholder="you@example.com"
+                placeholderTextColor="#A89F91"
+                value={email}
+                onChangeText={setEmail}
+                autoCapitalize="none"
+                keyboardType="email-address"
+              />
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>Password</Text>
+              <TextInput
+                style={styles.loginInput}
+                placeholder="Enter your password"
+                placeholderTextColor="#A89F91"
+                secureTextEntry
+                value={password}
+                onChangeText={setPassword}
+              />
+            </View>
+
+            <TouchableOpacity style={styles.forgotButton}>
+              <Text style={styles.forgotText}>Forgot password?</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => {
+                if (email && password) {
+                  setIsLoggedIn(true);
+                } else {
+                  alert('Paki-lagay ang Email at Password');
+                }
+              }}
+            >
+              <Text style={styles.loginButtonText}>SIGN IN</Text>
+            </TouchableOpacity>
+
+            <View style={styles.footerRow}>
+              <Text style={styles.footerText}>New here?</Text>
+              <TouchableOpacity>
+                <Text style={styles.footerLink}>Create account</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,7 +106,36 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7F4EF',
+    backgroundColor: '#F4EBDD',
+  },
+  loginWrap: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 32,
+  },
+  loginCard: {
+    backgroundColor: '#FFFDFB',
+    borderRadius: 28,
+    padding: 24,
+    borderWidth: 1,
+    borderColor: '#E9DECF',
+    shadowColor: '#3B2D20',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.12,
+    shadowRadius: 18,
+    elevation: 8,
+  },
+  logoBadge: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#2C221E',
+    color: '#F8F3EE',
+    fontSize: 18,
+    fontWeight: '700',
+    borderRadius: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    marginBottom: 18,
   },
   header: {
     paddingHorizontal: 24,
@@ -52,9 +149,74 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#8C7A6B',
+    marginTop: 8,
+    marginBottom: 20,
+  },
+  inputGroup: {
+    marginBottom: 16,
+  },
+  inputLabel: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#4F3F34',
+    marginBottom: 8,
+    marginLeft: 4,
+  },
+  loginInput: {
+    backgroundColor: '#F8F3EE',
+    borderWidth: 1,
+    borderColor: '#E2D5C2',
+    borderRadius: 14,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    fontSize: 15,
+    color: '#2C221E',
+  },
+  forgotButton: {
+    alignSelf: 'flex-end',
     marginTop: 4,
+    marginBottom: 20,
+  },
+  forgotText: {
+    color: '#A05B39',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  loginButton: {
+    backgroundColor: '#2C221E',
+    borderRadius: 14,
+    paddingVertical: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#2C221E',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  loginButtonText: {
+    color: '#F9F5F0',
+    fontWeight: '700',
+    letterSpacing: 1,
+    fontSize: 15,
+  },
+  footerRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  footerText: {
+    color: '#7A685C',
+    fontSize: 13,
+  },
+  footerLink: {
+    color: '#A05B39',
+    fontWeight: '700',
+    marginLeft: 6,
+    fontSize: 13,
   },
   searchContainer: {
     flexDirection: 'row',
