@@ -81,20 +81,21 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.title}>Vintage Store</Text>
-        <Text style={styles.subtitle}>Welcome to your shop</Text>
-      </View>
-   
-      {/* cart button */}
-      <TouchableOpacity
-        style={styles.cartButton}
-        onPress={() => setActiveTab('Cart')}
-      >
-        <Text style={styles.cartText}>🛒</Text>
-        <View style={styles.cartBadge}>
-          <Text style={styles.cartBadgeText}>{cartCount}</Text>
+        <View>
+          <Text style={styles.title}>Vintage Store</Text>
+          <Text style={styles.subtitle}>Welcome to your shop</Text>
         </View>
-      </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.cartButton}
+          onPress={() => setActiveTab('Cart')}
+        >
+          <Text style={styles.cartText}>🛒</Text>
+          <View style={styles.cartBadge}>
+            <Text style={styles.cartBadgeText}>{cartCount}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
@@ -117,7 +118,6 @@ export default function HomeScreen() {
       <View style={styles.content}>
         {activeTab === 'Home' && (
           <View style={styles.centerView}>
-            <Text style={styles.contentText}>🏠 Home Screen</Text>
             <TouchableOpacity
               style={[styles.loginButton, { marginTop: 15, paddingHorizontal: 16 }]}
               onPress={() => setCartCount(cartCount + 1)}
@@ -129,10 +129,6 @@ export default function HomeScreen() {
 
         {activeTab === 'Cart' && (
           <View style={styles.centerView}>
-            <Text style={styles.contentText}>🛒 Cart Screen</Text>
-            <Text style={{ marginTop: 8, color: '#8C7A6B' }}>
-              Items in cart: {cartCount}
-            </Text>
             {cartCount > 0 && (
               <TouchableOpacity
                 style={[styles.loginButton, { marginTop: 15, paddingHorizontal: 16, backgroundColor: '#A05B39' }]}
@@ -146,8 +142,6 @@ export default function HomeScreen() {
 
         {activeTab === 'User' && (
           <View style={styles.centerView}>
-            <Text style={styles.contentText}>👤 User Account Screen</Text>
-            <Text style={{ marginTop: 8, color: '#8C7A6B' }}>Logged as: {email}</Text>
             <TouchableOpacity
               style={[styles.loginButton, { marginTop: 20, paddingHorizontal: 20 }]}
               onPress={() => setIsLoggedIn(false)}
@@ -248,6 +242,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#E9DECF',
+    marginLeft: 12,
+  },
+  cartText: {
+    fontSize: 22,
   },
   cartIcon: {
     fontSize: 22,
