@@ -152,6 +152,14 @@ export default function HomeScreen() {
         )}
       </View>
 
+      {/* Floating Settings Button */}
+      <TouchableOpacity
+        style={styles.settingsButton}
+        onPress={() => setActiveTab('User')}
+      >
+        <Text style={styles.settingsText}>⚙️</Text>
+      </TouchableOpacity>
+
       {/* BOTTOM NAVIGATION BAR */}
       <View style={styles.bottomNav}>
         <TouchableOpacity
@@ -363,6 +371,25 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#2C221E',
     fontWeight: '600',
+  },
+  settingsButton: {
+    position: 'absolute',
+    right: 20,
+    bottom: 78,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: '#2C221E',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#382028',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.18,
+    shadowRadius: 12,
+    elevation: 6,
+  },
+  settingsText: {
+    fontSize: 24,
   },
   bottomNav: {
     flexDirection: 'row',
