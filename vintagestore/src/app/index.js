@@ -112,8 +112,77 @@ export default function HomeScreen() {
         )}
       </View>
 
-      {/* Main Content Area */}
-      <View style={styles.content} />
+      {/* Main Content Area (Nagbabago base sa activeTab) */}
+      <View style={styles.content}>
+        {activeTab === 'Home' && (
+          <View style={styles.centerView}>
+            <Text style={styles.contentText}>🏠 Home Screen</Text>
+            <TouchableOpacity
+              style={[styles.loginButton, { marginTop: 15, paddingHorizontal: 16 }]}
+              onPress={() => setCartCount(cartCount + 1)}
+            >
+              <Text style={styles.loginButtonText}>+ Add Sample Item to Cart</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {activeTab === 'Cart' && (
+          <View style={styles.centerView}>
+            <Text style={styles.contentText}>🛒 Cart Screen</Text>
+            <Text style={{ marginTop: 8, color: '#8C7A6B' }}>
+              Items in cart: {cartCount}
+            </Text>
+            {cartCount > 0 && (
+              <TouchableOpacity
+                style={[styles.loginButton, { marginTop: 15, paddingHorizontal: 16, backgroundColor: '#A05B39' }]}
+                onPress={() => setCartCount(0)}
+              >
+                <Text style={styles.loginButtonText}>Clear Cart</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
+
+        {activeTab === 'User' && (
+          <View style={styles.centerView}>
+            <Text style={styles.contentText}>👤 User Account Screen</Text>
+            <Text style={{ marginTop: 8, color: '#8C7A6B' }}>Logged as: {email}</Text>
+            <TouchableOpacity
+              style={[styles.loginButton, { marginTop: 20, paddingHorizontal: 20 }]}
+              onPress={() => setIsLoggedIn(false)}
+            >
+              <Text style={styles.loginButtonText}>LOG OUT</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+
+      {/* BOTTOM NAVIGATION BAR */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => setActiveTab('Home')}
+        >
+          <Text style={[styles.navIcon, activeTab === 'Home' && styles.activeNavText]}>
+            🏠
+          </Text>
+          <Text style={[styles.navLabel, activeTab === 'Home' && styles.activeNavText]}>
+            Home
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => setActiveTab('User')}
+        >
+          <Text style={[styles.navIcon, activeTab === 'User' && styles.activeNavText]}>
+            👤
+          </Text>
+          <Text style={[styles.navLabel, activeTab === 'User' && styles.activeNavText]}>
+            User Acc
+          </Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -135,7 +204,7 @@ const styles = StyleSheet.create({
     padding: 24,
     borderWidth: 1,
     borderColor: '#E9DECF',
-    shadowColor: '#3B2D20',
+    shadowColor: '#382028',
     shadowOffset: { width: 0, height: 12 },
     shadowOpacity: 0.12,
     shadowRadius: 18,
@@ -156,18 +225,47 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 40,
     paddingBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#2C221E',
     letterSpacing: 0.5,
   },
   subtitle: {
-    fontSize: 15,
+    fontSize: 14,
     color: '#8C7A6B',
-    marginTop: 8,
-    marginBottom: 20,
+    marginTop: 4,
+  },
+  cartButton: {
+    position: 'relative',
+    padding: 8,
+    backgroundColor: '#FFFDFB',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E9DECF',
+  },
+  cartIcon: {
+    fontSize: 22,
+  },
+  cartBadge: {
+    position: 'absolute',
+    top: -4,
+    right: -4,
+    backgroundColor: '#A05B39',
+    borderRadius: 10,
+    width: 18,
+    height: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cartBadgeText: {
+    color: '#FFF',
+    fontSize: 10,
+    fontWeight: 'bold',
   },
   inputGroup: {
     marginBottom: 16,
@@ -201,21 +299,15 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     backgroundColor: '#2C221E',
-    borderRadius: 14,
     paddingVertical: 16,
+    borderRadius: 14,
     alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#2C221E',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 12,
-    elevation: 4,
   },
   loginButtonText: {
-    color: '#F9F5F0',
+    color: '#FFFDFB',
+    fontSize: 15,
     fontWeight: '700',
     letterSpacing: 1,
-    fontSize: 15,
   },
   footerRow: {
     flexDirection: 'row',
@@ -240,7 +332,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     marginVertical: 12,
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 10,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#E6DFD5',
@@ -262,5 +354,41 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  centerView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  contentText: {
+    fontSize: 18,
+    color: '#2C221E',
+    fontWeight: '600',
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: '#FFFDFB',
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#E9DECF',
+  },
+  navItem: {
+    alignItems: 'center',
+  },
+  navIcon: {
+    fontSize: 20,
+    opacity: 0.5,
+  },
+  navLabel: {
+    fontSize: 12,
+    color: '#8C7A6B',
+    marginTop: 2,
+    fontWeight: '600',
+  },
+  activeNavText: {
+    opacity: 1,
+    color: '#A05B39',
   },
 });
