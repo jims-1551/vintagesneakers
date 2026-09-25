@@ -107,7 +107,9 @@ export default function HomeScreen() {
         />
         {searchQuery.length > 0 && (
           <Text style={styles.clearText} onPress={() => setSearchQuery('')}>
-            ✕
+            <text style={styles.clearText}>Clear</text>
+            
+            ❌
           </Text>
         )}
       </View>
