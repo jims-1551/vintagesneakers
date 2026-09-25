@@ -89,21 +89,12 @@ export default function HomeScreen() {
       <TouchableOpacity
         style={styles.cartButton}
         onPress={() => setActiveTab('Cart')}
-<<<<<<< HEAD
       >
         <Text style={styles.cartText}>🛒</Text>
         <View style={styles.cartBadge}>
           <Text style={styles.cartBadgeText}>{cartCount}</Text>
         </View>
       </TouchableOpacity>
-=======
-        >
-          <Text style={styles.cartText}>🛒</Text>
-          <View style={styles.cartBadge}>
-            <Text style={styles.cartBadgeText}>3</Text>
-          </View>
-        </TouchableOpacity>
->>>>>>> 45dee2d4246e9790dbaa7f5a21b4a3e5e0029805
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
