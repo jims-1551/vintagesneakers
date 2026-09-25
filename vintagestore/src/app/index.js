@@ -90,9 +90,9 @@ export default function HomeScreen() {
         onPress={() => setActiveTab('Cart')}
         >
           <Text style={styles.cartText}>🛒</Text>
-          <view style={styles.cartBadge}>
+          <View style={styles.cartBadge}>
             <Text style={styles.cartBadgeText}>3</Text>
-          </view>
+          </View>
         </TouchableOpacity>
 
       {/* Search Bar */}
