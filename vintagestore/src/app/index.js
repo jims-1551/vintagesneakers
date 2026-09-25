@@ -9,8 +9,9 @@ export default function HomeScreen() {
   const [password, setPassword] = useState('');
 
   // Navigation states (pure state tabs)
-  const [activeTab, setActiveTab] = useState('home');// adi didi an home, users, cart
+  const [activeTab, setActiveTab] = useState('Home');
   const [activeSubTab, setActiveSubTab] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
 
   // 2. DITO ILAGAY ANG LOGIN GATEKEEPER (Bago mag-return)
   if (!isLoggedIn) {
@@ -84,16 +85,16 @@ export default function HomeScreen() {
         <Text style={styles.subtitle}>Welcome to your shop</Text>
       </View>
    
-      // cart button
-      <TouchableOpacity 
-        style={styles.cartButton }
+      {/* cart button */}
+      <TouchableOpacity
+        style={styles.cartButton}
         onPress={() => setActiveTab('Cart')}
-        >
-          <Text style={styles.cartText}>🛒</Text>
-          <view style={styles.cartBadge}>
-            <Text style={styles.cartBadgeText}>3</Text>
-          </view>
-        </TouchableOpacity>
+      >
+        <Text style={styles.cartText}>🛒</Text>
+        <View style={styles.cartBadge}>
+          <Text style={styles.cartBadgeText}>{cartCount}</Text>
+        </View>
+      </TouchableOpacity>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
