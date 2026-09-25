@@ -8,6 +8,10 @@ export default function HomeScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // Navigation states (pure state tabs)
+  const [activeTab, setActiveTab] = useState('home');// adi didi an home, users, cart
+  const [activeSubTab, setActiveSubTab] = useState(0);
+
   // 2. DITO ILAGAY ANG LOGIN GATEKEEPER (Bago mag-return)
   if (!isLoggedIn) {
     return (
@@ -16,13 +20,13 @@ export default function HomeScreen() {
           <View style={styles.loginCard}>
             <Text style={styles.logoBadge}>VS</Text>
             <Text style={styles.title}>Vintage Store</Text>
-            <Text style={styles.subtitle}>Sign in to access exclusive drops</Text>
+            <Text style={styles.subtitle}>Sign in to access exclusive VintageSneakers items</Text>
 
             <View style={styles.inputGroup}>
               <Text style={styles.inputLabel}>Email</Text>
               <TextInput
                 style={styles.loginInput}
-                placeholder="you@example.com"
+                placeholder="Enter your email"
                 placeholderTextColor="#A89F91"
                 value={email}
                 onChangeText={setEmail}
@@ -71,7 +75,7 @@ export default function HomeScreen() {
       </SafeAreaView>
     );
   }
-
+  // Main app screen(home,cart,profile)
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -79,6 +83,17 @@ export default function HomeScreen() {
         <Text style={styles.title}>Vintage Store</Text>
         <Text style={styles.subtitle}>Welcome to your shop</Text>
       </View>
+   
+      // cart button
+      <TouchableOpacity 
+        style={styles.cartButton }
+        onPress={() => setActiveTab('Cart')}
+        >
+          <Text style={styles.cartText}>🛒</Text>
+          <view style={styles.cartBadge}>
+            <Text style={styles.cartBadgeText}>3</Text>
+          </view>
+        </TouchableOpacity>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
