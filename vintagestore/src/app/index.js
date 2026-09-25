@@ -3,6 +3,8 @@ import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } fro
 
 export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All');
+  const categories = ['All', 'Basketball', 'Running', 'Skate', 'High-Top', 'Rare Finds'];
   // 1. DITO ILAGAY ANG MGA LOGIN STATES (Line 6)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
@@ -112,6 +114,30 @@ export default function HomeScreen() {
             ✕
           </Text>
         )}
+        // Category Chips
+        
+      </View>
+
+      <View style={styles.categoryRow}>
+        {categories.map((category) => (
+          <TouchableOpacity
+            key={category}
+            style={[
+              styles.categoryChip,
+              activeCategory === category && styles.activeCategoryChip,
+            ]}
+            onPress={() => setActiveCategory(category)}
+          >
+            <Text
+              style={[
+                styles.categoryText,
+                activeCategory === category && styles.activeCategoryText,
+              ]}
+            >
+              {category}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
 
       {/* Main Content Area (Nagbabago base sa activeTab) */}
@@ -358,7 +384,37 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#8C7A6B',
     paddingHorizontal: 4,
+
   },
+  //design for category 
+  categoryRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    paddingHorizontal: 24,
+    paddingBottom: 12,
+  },
+  categoryChip: {
+    backgroundColor: '#F8F3EE',
+    borderWidth: 1,
+    borderColor: '#E2D5C2',
+    borderRadius: 999,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+  },
+  activeCategoryChip: {
+    backgroundColor: '#2C221E',
+    borderColor: '#2C221E',
+  },
+  categoryText: {
+    color: '#4F3F34',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  activeCategoryText: {
+    color: '#FFFDFB',
+  },
+  // end of category design
   content: {
     flex: 1,
   },
