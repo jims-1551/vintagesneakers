@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -144,6 +144,12 @@ export default function HomeScreen() {
       <View style={styles.content}>
         {activeTab === 'Home' && (
           <View style={styles.centerView}>
+            <Image
+              source={{ uri: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85' }}
+              style={styles.productImage}
+              resizeMode="contain"
+              accessibilityLabel="Red sneaker product"
+            />
             <TouchableOpacity
               style={[styles.loginButton, { marginTop: 15, paddingHorizontal: 16 }]}
               onPress={() => setCartCount(cartCount + 1)}
@@ -422,6 +428,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  productImage: {
+    width: '85%',
+    height: 240,
   },
   contentText: {
     fontSize: 18,
