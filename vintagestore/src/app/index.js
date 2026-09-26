@@ -4,13 +4,14 @@ import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, Touchable
 export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
-  const categories = ['All', 'Basketball', 'Running', 'Skate', 'High-Top', 'Rare Finds'];
+  const categories = ['All', 'Basketball', 'Running', 'Skate', 'High-Top'];
   const products = [
-    { name: 'Red Retro Runner', price: '$89', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85' },
-    { name: 'Vintage Court Low', price: '$95', image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85' },
-    { name: 'Classic Street Sneaker', price: '$78', image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=700&q=85' },
-    { name: 'Heritage Runner', price: '$105', image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=700&q=85' },
-    { name: 'Old-School High Top', price: '$110', image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=700&q=85' },
+    // Sample product data 
+    { name: 'Red Nike Flyknit', price: '₱999', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85' },
+    { name: 'Nike Air Max', price: '₱1200', image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85' },
+    { name: 'Air Jordan 1', price: '₱1200', image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=700&q=85' },
+    { name: 'Puma Smash V2, Perforated Leather', price: '₱999', image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=700&q=85' },
+    { name: 'Nike Sneaker', price: '₱1200', image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=700&q=85' },
   ];
   // 1. DITO ILAGAY ANG MGA LOGIN STATES (Line 6)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -199,7 +200,7 @@ export default function HomeScreen() {
           </View>
         )}
       </View>
-
+      //settings button
       {/* Floating Settings Button */}
       <TouchableOpacity
         style={styles.settingsButton}
