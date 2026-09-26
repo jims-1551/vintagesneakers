@@ -1,10 +1,17 @@
 import { useState } from 'react';
-import { Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
   const categories = ['All', 'Basketball', 'Running', 'Skate', 'High-Top', 'Rare Finds'];
+  const products = [
+    { name: 'Red Retro Runner', price: '$89', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85' },
+    { name: 'Vintage Court Low', price: '$95', image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85' },
+    { name: 'Classic Street Sneaker', price: '$78', image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=700&q=85' },
+    { name: 'Heritage Runner', price: '$105', image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=700&q=85' },
+    { name: 'Old-School High Top', price: '$110', image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=700&q=85' },
+  ];
   // 1. DITO ILAGAY ANG MGA LOGIN STATES (Line 6)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
@@ -143,20 +150,29 @@ export default function HomeScreen() {
       {/* Main Content Area (Nagbabago base sa activeTab) */}
       <View style={styles.content}>
         {activeTab === 'Home' && (
-          <View style={styles.centerView}>
-            <Image
-              source={{ uri: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85' }}
-              style={styles.productImage}
-              resizeMode="contain"
-              accessibilityLabel="Red sneaker product"
-            />
-            <TouchableOpacity
-              style={[styles.loginButton, { marginTop: 15, paddingHorizontal: 16 }]}
-              onPress={() => setCartCount(cartCount + 1)}
-            >
-              <Text style={styles.loginButtonText}>+ Add Sample Item to Cart</Text>
-            </TouchableOpacity>
-          </View>
+          <ScrollView
+            contentContainerStyle={styles.productGrid}
+            showsVerticalScrollIndicator={false}
+          >
+            {products.map((product) => (
+              <View key={product.name} style={styles.productCard}>
+                <Image
+                  source={{ uri: product.image }}
+                  style={styles.productImage}
+                  resizeMode="cover"
+                  accessibilityLabel={product.name}
+                />
+                <Text style={styles.productName}>{product.name}</Text>
+                <Text style={styles.productPrice}>{product.price}</Text>
+                <TouchableOpacity
+                  style={styles.productAddButton}
+                  onPress={() => setCartCount(cartCount + 1)}
+                >
+                  <Text style={styles.productAddText}>Add to cart</Text>
+                </TouchableOpacity>
+              </View>
+            ))}
+          </ScrollView>
         )}
 
         {activeTab === 'Cart' && (
@@ -424,14 +440,57 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
+  productGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 100,
+  },
   centerView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  productCard: {
+    width: '48%',
+    marginBottom: 12,
+    padding: 8,
+    backgroundColor: '#FFFDFB',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#E9DECF',
+  },
   productImage: {
-    width: '85%',
-    height: 240,
+    width: '100%',
+    height: 132,
+    backgroundColor: '#EED7CB',
+    borderRadius: 6,
+  },
+  productName: {
+    marginTop: 8,
+    color: '#2C221E',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  productPrice: {
+    marginTop: 3,
+    color: '#A05B39',
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  productAddButton: {
+    marginTop: 8,
+    paddingVertical: 8,
+    alignItems: 'center',
+    backgroundColor: '#2C221E',
+    borderRadius: 6,
+  },
+  productAddText: {
+    color: '#FFFDFB',
+    fontSize: 12,
+    fontWeight: '700',
   },
   contentText: {
     fontSize: 18,
