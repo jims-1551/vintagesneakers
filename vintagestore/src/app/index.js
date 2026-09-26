@@ -38,7 +38,7 @@ export default function HomeScreen() {
       colors: [
         { name: 'White', value: '#F7F3EE' },
         { name: 'Black', value: '#2C221E' },
-        { name: 'Brown', value: '#8D5E3C' },
+        { name: 'Brown', value: '#8D5E3C' }, 
       ],
     },
     {
@@ -143,8 +143,8 @@ export default function HomeScreen() {
       {/* Header */}
       <View style={styles.header}>
         <View>
-          <Text style={styles.title}>Vintage Store</Text>
-          <Text style={styles.subtitle}>Welcome to your shop</Text>
+          <Text style={styles.headerTitle}>Vintage Store</Text>
+          <Text style={styles.headerSubtitle}>Welcome to your shop</Text>
         </View>
 
         <TouchableOpacity
@@ -403,6 +403,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: '#8D5E3C',
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
+    borderRadius: 12,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    letterSpacing: 0.5,
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    color: '#F7EDE4',
+    marginTop: 4,
   },
   title: {
     fontSize: 28,
