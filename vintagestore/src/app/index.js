@@ -22,6 +22,8 @@ export default function HomeScreen() {
   const [activeTab, setActiveTab] = useState('Home');
   const [activeSubTab, setActiveSubTab] = useState(0);
   const [cartCount, setCartCount] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const sizeOptions = ['9', '10', '11'];
 
   // 2. DITO ILAGAY ANG LOGIN GATEKEEPER (Bago mag-return)
   if (!isLoggedIn) {
@@ -155,24 +157,56 @@ export default function HomeScreen() {
             contentContainerStyle={styles.productGrid}
             showsVerticalScrollIndicator={false}
           >
-            {products.map((product) => (
-              <View key={product.name} style={styles.productCard}>
-                <Image
-                  source={{ uri: product.image }}
-                  style={styles.productImage}
-                  resizeMode="cover"
-                  accessibilityLabel={product.name}
-                />
-                <Text style={styles.productName}>{product.name}</Text>
-                <Text style={styles.productPrice}>{product.price}</Text>
-                <TouchableOpacity
-                  style={styles.productAddButton}
-                  onPress={() => setCartCount(cartCount + 1)}
-                >
-                  <Text style={styles.productAddText}>Add to cart</Text>
-                </TouchableOpacity>
-              </View>
-            ))}
+            {products.map((product) => {
+              const isSelected = selectedProduct === product.name;
+
+              return (
+                <View key={product.name} style={styles.productCard}>
+                  <TouchableOpacity
+                    activeOpacity={0.85}
+                    onPress={() =>
+                      setSelectedProduct(isSelected ? null : product.name)
+                    }
+                  >
+                    <Image
+                      source={{ uri: product.image }}
+                      style={styles.productImage}
+                      resizeMode="cover"
+                      accessibilityLabel={product.name}
+                    />
+                    <Text style={styles.productName}>{product.name}</Text>
+                    <Text style={styles.productPrice}>{product.price}</Text>
+                  </TouchableOpacity>
+
+                  {isSelected && (
+                    <View style={styles.sizeSelector}>
+                      <Text style={styles.sizeLabel}>Size</Text>
+                      <View style={styles.sizeRow}>
+                        {sizeOptions.map((size) => (
+                          <TouchableOpacity
+                            key={size}
+                            style={styles.sizeOption}
+                            onPress={() => {
+                              setSelectedProduct(null);
+                              setCartCount((count) => count + 1);
+                            }}
+                          >
+                            <Text style={styles.sizeOptionText}>{size}</Text>
+                          </TouchableOpacity>
+                        ))}
+                      </View>
+                    </View>
+                  )}
+
+                  <TouchableOpacity
+                    style={styles.productAddButton}
+                    onPress={() => setCartCount((count) => count + 1)}
+                  >
+                    <Text style={styles.productAddText}>Add to cart</Text>
+                  </TouchableOpacity>
+                </View>
+              );
+            })}
           </ScrollView>
         )}
 
@@ -490,6 +524,39 @@ const styles = StyleSheet.create({
     marginTop: 3,
     color: '#A05B39',
     fontSize: 13,
+    fontWeight: '700',
+  },
+  sizeSelector: {
+    marginTop: 10,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#F0E5D9',
+  },
+  sizeLabel: {
+    color: '#6E574A',
+    fontSize: 11,
+    fontWeight: '700',
+    marginBottom: 6,
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+  },
+  sizeRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 6,
+  },
+  sizeOption: {
+    flex: 1,
+    paddingVertical: 8,
+    borderRadius: 8,
+    backgroundColor: '#F8F3EE',
+    borderWidth: 1,
+    borderColor: '#E2D5C2',
+    alignItems: 'center',
+  },
+  sizeOptionText: {
+    color: '#2C221E',
+    fontSize: 12,
     fontWeight: '700',
   },
   productAddButton: {
