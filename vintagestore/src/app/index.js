@@ -191,23 +191,34 @@ export default function HomeScreen() {
 
         {activeTab === 'User' && (
           <View style={styles.centerView}>
-            <TouchableOpacity
-              style={[styles.loginButton, { marginTop: 20, paddingHorizontal: 20 }]}
-              onPress={() => setIsLoggedIn(false)}
-            >
-              <Text style={styles.loginButtonText}>LOG OUT</Text>
-            </TouchableOpacity>
+            <View style={styles.userAccountCard}>
+              <View style={styles.userHeaderRow}>
+                <Text style={styles.userAccountTitle}>User Account</Text>
+                <TouchableOpacity
+                  style={styles.userSettingsButton}
+                  onPress={() => alert('Settings opened')}
+                >
+                  <Text style={styles.userSettingsText}>⚙️</Text>
+                </TouchableOpacity>
+              </View>
+
+              <Text style={styles.userAccountInfo}>Member since 2026</Text>
+
+              <View style={styles.userAccountMeta}>
+                <Text style={styles.userAccountLabel}>Signed in as</Text>
+                <Text style={styles.userAccountEmail}>{email || 'member@vintagestore.com'}</Text>
+              </View>
+
+              <TouchableOpacity
+                style={[styles.loginButton, { marginTop: 20, paddingHorizontal: 20 }]}
+                onPress={() => setIsLoggedIn(false)}
+              >
+                <Text style={styles.loginButtonText}>LOG OUT</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       </View>
-      //settings button
-      {/* Floating Settings Button */}
-      <TouchableOpacity
-        style={styles.settingsButton}
-        onPress={() => setActiveTab('User')}
-      >
-        <Text style={styles.settingsText}>⚙️</Text>
-      </TouchableOpacity>
 
       {/* BOTTOM NAVIGATION BAR */}
       <View style={styles.bottomNav}>
@@ -498,24 +509,66 @@ const styles = StyleSheet.create({
     color: '#2C221E',
     fontWeight: '600',
   },
-  settingsButton: {
-    position: 'absolute',
-    right: 20,
-    bottom: 78,
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    backgroundColor: '#2C221E',
+  userAccountCard: {
+    width: '90%',
+    backgroundColor: '#FFFDFB',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E9DECF',
+    padding: 20,
+    shadowColor: '#382028',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 5,
+  },
+  userHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  userAccountTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#2C221E',
+  },
+  userSettingsButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#F4EBDD',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#382028',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.18,
-    shadowRadius: 12,
-    elevation: 6,
+    borderWidth: 1,
+    borderColor: '#E9DECF',
   },
-  settingsText: {
-    fontSize: 24,
+  userSettingsText: {
+    fontSize: 20,
+  },
+  userAccountInfo: {
+    fontSize: 14,
+    color: '#8C7A6B',
+    marginBottom: 14,
+  },
+  userAccountMeta: {
+    backgroundColor: '#F8F3EE',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E2D5C2',
+    padding: 12,
+  },
+  userAccountLabel: {
+    fontSize: 12,
+    color: '#8C7A6B',
+    marginBottom: 4,
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+  },
+  userAccountEmail: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#2C221E',
   },
   bottomNav: {
     flexDirection: 'row',
