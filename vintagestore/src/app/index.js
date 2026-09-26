@@ -4,14 +4,65 @@ import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, Touchable
 export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedColors, setSelectedColors] = useState({});
   const categories = ['All', 'Basketball', 'Running', 'Skate', 'High-Top'];
   const products = [
-    // Sample product data 
-    { name: 'Red Nike Flyknit', price: '₱999', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85' },
-    { name: 'Nike Air Max', price: '₱1200', image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85' },
-    { name: 'Air Jordan 1', price: '₱1200', image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=700&q=85' },
-    { name: 'Puma Smash V2, Perforated Leather', price: '₱999', image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=700&q=85' },
-    { name: 'Nike Sneaker', price: '₱1200', image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=700&q=85' },
+    {
+      name: 'Red Nike Flyknit',
+      price: '₱999',
+      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85',
+      sizes: [8, 9, 10, 11],
+      colors: [
+        { name: 'Red', value: '#D93A2F' },
+        { name: 'White', value: '#F7F3EE' },
+        { name: 'Black', value: '#2C221E' },
+      ],
+    },
+    {
+      name: 'Nike Air Max',
+      price: '₱1200',
+      image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85',
+      sizes: [8, 9, 10, 11],
+      colors: [
+        { name: 'Blue', value: '#2F5D9A' },
+        { name: 'Cream', value: '#EADCC6' },
+        { name: 'Gray', value: '#7B7D81' },
+      ],
+    },
+    {
+      name: 'Air Jordan 1',
+      price: '₱1200',
+      image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=700&q=85',
+      sizes: [8, 9, 10, 11],
+      colors: [
+        { name: 'White', value: '#F7F3EE' },
+        { name: 'Black', value: '#2C221E' },
+        { name: 'Brown', value: '#8D5E3C' },
+      ],
+    },
+    {
+      name: 'Puma Smash V2, Perforated Leather',
+      price: '₱999',
+      image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=700&q=85',
+      sizes: [8, 9, 10, 11],
+      colors: [
+        { name: 'Orange', value: '#E57A3B' },
+        { name: 'Green', value: '#4B7A4A' },
+        { name: 'Beige', value: '#D4B894' },
+      ],
+    },
+    {
+      name: 'Nike Sneaker',
+      price: '₱1200',
+      image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=700&q=85',
+      sizes: [8, 9, 10, 11],
+      colors: [
+        { name: 'Gold', value: '#C9A253' },
+        { name: 'Navy', value: '#243B5F' },
+        { name: 'Pink', value: '#D89CB0' },
+      ],
+    },
   ];
   // 1. DITO ILAGAY ANG MGA LOGIN STATES (Line 6)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,8 +73,6 @@ export default function HomeScreen() {
   const [activeTab, setActiveTab] = useState('Home');
   const [activeSubTab, setActiveSubTab] = useState(0);
   const [cartCount, setCartCount] = useState(0);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const sizeOptions = ['9', '10', '11'];
 
   // 2. DITO ILAGAY ANG LOGIN GATEKEEPER (Bago mag-return)
   if (!isLoggedIn) {
@@ -124,8 +173,6 @@ export default function HomeScreen() {
             ✕
           </Text>
         )}
-        // Category Chips
-        
       </View>
 
       <View style={styles.categoryRow}>
@@ -159,14 +206,13 @@ export default function HomeScreen() {
           >
             {products.map((product) => {
               const isSelected = selectedProduct === product.name;
+              const selectedColor = selectedColors[product.name] || product.colors[0].name;
 
               return (
                 <View key={product.name} style={styles.productCard}>
                   <TouchableOpacity
                     activeOpacity={0.85}
-                    onPress={() =>
-                      setSelectedProduct(isSelected ? null : product.name)
-                    }
+                    onPress={() => setSelectedProduct(isSelected ? null : product.name)}
                   >
                     <Image
                       source={{ uri: product.image }}
@@ -179,16 +225,44 @@ export default function HomeScreen() {
                   </TouchableOpacity>
 
                   {isSelected && (
-                    <View style={styles.sizeSelector}>
-                      <Text style={styles.sizeLabel}>Size</Text>
+                    <View style={styles.optionContainer}>
+                      <Text style={styles.sizeLabel}>Select color</Text>
+                      <View style={styles.colorRow}>
+                        {product.colors.map((color) => {
+                          const isActive = selectedColor === color.name;
+
+                          return (
+                            <TouchableOpacity
+                              key={color.name}
+                              style={[
+                                styles.colorOption,
+                                { backgroundColor: color.value },
+                                isActive && styles.activeColorOption,
+                              ]}
+                              onPress={() =>
+                                setSelectedColors((current) => ({
+                                  ...current,
+                                  [product.name]: color.name,
+                                }))
+                              }
+                              accessibilityLabel={`Choose ${color.name} color`}
+                            >
+                              {isActive && <Text style={styles.colorCheck}>✓</Text>}
+                            </TouchableOpacity>
+                          );
+                        })}
+                      </View>
+
+                      <Text style={styles.sizeLabel}>Select size</Text>
                       <View style={styles.sizeRow}>
-                        {sizeOptions.map((size) => (
+                        {product.sizes.map((size) => (
                           <TouchableOpacity
                             key={size}
                             style={styles.sizeOption}
                             onPress={() => {
+                              setCartCount((current) => current + 1);
                               setSelectedProduct(null);
-                              setCartCount((count) => count + 1);
+                              alert(`Added ${selectedColor} ${product.name} in size ${size} to cart`);
                             }}
                           >
                             <Text style={styles.sizeOptionText}>{size}</Text>
@@ -200,7 +274,11 @@ export default function HomeScreen() {
 
                   <TouchableOpacity
                     style={styles.productAddButton}
-                    onPress={() => setCartCount((count) => count + 1)}
+                    onPress={() => {
+                      const chosenColor = selectedColors[product.name] || product.colors[0].name;
+                      setCartCount((current) => current + 1);
+                      alert(`Added ${chosenColor} ${product.name} to cart`);
+                    }}
                   >
                     <Text style={styles.productAddText}>Add to cart</Text>
                   </TouchableOpacity>
@@ -526,19 +604,48 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '700',
   },
-  sizeSelector: {
+  optionContainer: {
     marginTop: 10,
     paddingTop: 8,
     borderTopWidth: 1,
-    borderTopColor: '#F0E5D9',
+    borderTopColor: '#E9DECF',
   },
   sizeLabel: {
-    color: '#6E574A',
+    color: '#6F5944',
     fontSize: 11,
     fontWeight: '700',
-    marginBottom: 6,
+    marginBottom: 8,
     textTransform: 'uppercase',
-    letterSpacing: 0.8,
+    letterSpacing: 0.5,
+  },
+  //color of shoes
+  colorRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+    gap: 6,
+  },
+  colorOption: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E2D5C2',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  activeColorOption: {
+    borderWidth: 2,
+    borderColor: '#2C221E',
+    transform: [{ scale: 1.05 }],
+  },
+  colorCheck: {
+    color: '#FFFDFB',
+    fontSize: 11,
+    fontWeight: '700',
+    textShadowColor: 'rgba(0,0,0,0.2)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   sizeRow: {
     flexDirection: 'row',
@@ -547,12 +654,12 @@ const styles = StyleSheet.create({
   },
   sizeOption: {
     flex: 1,
+    alignItems: 'center',
     paddingVertical: 8,
-    borderRadius: 8,
-    backgroundColor: '#F8F3EE',
+    borderRadius: 6,
+    backgroundColor: '#F4EBDD',
     borderWidth: 1,
     borderColor: '#E2D5C2',
-    alignItems: 'center',
   },
   sizeOptionText: {
     color: '#2C221E',
