@@ -14,9 +14,9 @@ export default function HomeScreen() {
       image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85',
       sizes: [8, 9, 10, 11],
       colors: [
-        { name: 'Red', value: '#D93A2F' },
+        { name: 'Red', value: '#2C221E' },
         { name: 'White', value: '#F7F3EE' },
-        { name: 'Black', value: '#2C221E' },
+        { name: 'Black', value: '#ff4a02' },
       ],
     },
     {
@@ -25,9 +25,9 @@ export default function HomeScreen() {
       image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85',
       sizes: [8, 9, 10, 11],
       colors: [
-        { name: 'Blue', value: '#2F5D9A' },
+        { name: 'Blue', value: '#2C221E' },
         { name: 'Cream', value: '#EADCC6' },
-        { name: 'Gray', value: '#7B7D81' },
+        { name: 'Gray', value: '#817e7b' },
       ],
     },
     {
@@ -36,8 +36,8 @@ export default function HomeScreen() {
       image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=700&q=85',
       sizes: [8, 9, 10, 11],
       colors: [
-        { name: 'White', value: '#F7F3EE' },
-        { name: 'Black', value: '#2C221E' },
+        { name: 'White', value: '#2C221E' },
+        { name: 'Black', value: '#F7F3EE' },
         { name: 'Brown', value: '#8D5E3C' }, 
       ],
     },
@@ -47,8 +47,8 @@ export default function HomeScreen() {
       image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=700&q=85',
       sizes: [8, 9, 10, 11],
       colors: [
-        { name: 'Orange', value: '#E57A3B' },
-        { name: 'Green', value: '#4B7A4A' },
+        { name: 'Orange', value: '#2C221E' },
+        { name: 'Green', value: '#F7F3EE' },
         { name: 'Beige', value: '#D4B894' },
       ],
     },
@@ -58,8 +58,8 @@ export default function HomeScreen() {
       image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=700&q=85',
       sizes: [8, 9, 10, 11],
       colors: [
-        { name: 'Gold', value: '#C9A253' },
-        { name: 'Navy', value: '#243B5F' },
+        { name: 'Gold', value: '#2C221E' },
+        { name: 'Navy', value: '#F7F3EE' },
         { name: 'Pink', value: '#D89CB0' },
       ],
     },
