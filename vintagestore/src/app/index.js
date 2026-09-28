@@ -407,27 +407,6 @@ export default function HomeScreen() {
           </View>
         )}
 
-        {activeTab === 'User' && (
-          <View style={styles.centerView}>
-            <View style={styles.userAccountCard}>
-              <Text style={styles.userAccountTitle}>User Account</Text>
-
-              <Text style={styles.userAccountInfo}>Member since 2026</Text>
-
-              <View style={styles.userAccountMeta}>
-                <Text style={styles.userAccountLabel}>Signed in as</Text>
-                <Text style={styles.userAccountEmail}>{email || 'member@vintagestore.com'}</Text>
-              </View>
-
-              <TouchableOpacity
-                style={[styles.loginButton, { marginTop: 20, paddingHorizontal: 20 }]}
-                onPress={() => setIsLoggedIn(false)}
-              >
-                <Text style={styles.loginButtonText}>LOG OUT</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
       </View>
 
       {/* BOTTOM NAVIGATION BAR */}
@@ -444,17 +423,6 @@ export default function HomeScreen() {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => setActiveTab('User')}
-        >
-          <Text style={[styles.navIcon, activeTab === 'User' && styles.activeNavText]}>
-            👤
-          </Text>
-          <Text style={[styles.navLabel, activeTab === 'User' && styles.activeNavText]}>
-            User Acc
-          </Text>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -481,48 +449,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 12 },
     shadowOpacity: 0.12,
     shadowRadius: 18,
-    elevation: 8,
-  },
-  logoBadge: {
-    alignSelf: 'flex-start',
-    backgroundColor: '#2C221E',
-    color: '#F8F3EE',
-    fontSize: 18,
-    fontWeight: '700',
-    borderRadius: 14,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    marginBottom: 18,
-  },
-  header: {
-    paddingHorizontal: 24,
-    paddingTop: 40,
-    paddingBottom: 12,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#5A3825',
-    borderWidth: 2,
-    borderColor: '#FFFFFF',
-    borderRadius: 12,
-  },
-  headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    letterSpacing: 0.5,
-  },
-  headerSubtitle: {
-    fontSize: 14,
-    color: '#F7EDE4',
-    marginTop: 4,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#2C221E',
-    letterSpacing: 0.5,
-  },
   subtitle: {
     fontSize: 14,
     color: '#8C7A6B',
