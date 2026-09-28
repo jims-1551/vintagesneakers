@@ -83,7 +83,22 @@ export default function HomeScreen() {
   // Navigation states (pure state tabs)
   const [activeTab, setActiveTab] = useState('Home');
   const [activeSubTab, setActiveSubTab] = useState(0);
-  const [cartCount, setCartCount] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
+  const cartCount = cartItems.length;
+
+  const addToCart = (product, selectedSize = null, selectedColor = null) => {
+    const chosenColor = selectedColor || selectedColors[product.name] || product.colors[0].name;
+    const cartItem = {
+      id: `${product.name}-${chosenColor}-${selectedSize ?? 'default'}`,
+      productName: product.name,
+      price: product.price,
+      image: product.image,
+      color: chosenColor,
+      size: selectedSize,
+    };
+
+    setCartItems((currentItems) => [...currentItems, cartItem]);
+  };
 
   // 2. DITO ILAGAY ANG LOGIN GATEKEEPER (Bago mag-return)
   if (!isLoggedIn) {
@@ -271,7 +286,7 @@ export default function HomeScreen() {
                             key={size}
                             style={styles.sizeOption}
                             onPress={() => {
-                              setCartCount((current) => current + 1);
+                              addToCart(product, size, selectedColor);
                               setSelectedProduct(null);
                               alert(`Added ${selectedColor} ${product.name} in size ${size} to cart`);
                             }}
@@ -287,7 +302,7 @@ export default function HomeScreen() {
                     style={styles.productAddButton}
                     onPress={() => {
                       const chosenColor = selectedColors[product.name] || product.colors[0].name;
-                      setCartCount((current) => current + 1);
+                      addToCart(product, null, chosenColor);
                       alert(`Added ${chosenColor} ${product.name} to cart`);
                     }}
                   >
@@ -300,14 +315,35 @@ export default function HomeScreen() {
         )}
 
         {activeTab === 'Cart' && (
-          <View style={styles.centerView}>
-            {cartCount > 0 && (
-              <TouchableOpacity
-                style={[styles.loginButton, { marginTop: 15, paddingHorizontal: 16, backgroundColor: '#A05B39' }]}
-                onPress={() => setCartCount(0)}
-              >
-                <Text style={styles.loginButtonText}>Clear Cart</Text>
-              </TouchableOpacity>
+          <View style={styles.cartContainer}>
+            {cartItems.length === 0 ? (
+              <View style={styles.emptyCartState}>
+                <Text style={styles.emptyCartIcon}>🛒</Text>
+                <Text style={styles.emptyCartText}>Your cart is empty.</Text>
+              </View>
+            ) : (
+              <>
+                <ScrollView contentContainerStyle={styles.cartList} showsVerticalScrollIndicator={false}>
+                  {cartItems.map((item) => (
+                    <View key={item.id} style={styles.cartItem}>
+                      <Image source={{ uri: item.image }} style={styles.cartItemImage} resizeMode="cover" />
+                      <View style={styles.cartItemDetails}>
+                        <Text style={styles.cartItemName}>{item.productName}</Text>
+                        <Text style={styles.cartItemMeta}>Color: {item.color}</Text>
+                        {item.size ? <Text style={styles.cartItemMeta}>Size: {item.size}</Text> : null}
+                        <Text style={styles.cartItemPrice}>{item.price}</Text>
+                      </View>
+                    </View>
+                  ))}
+                </ScrollView>
+
+                <TouchableOpacity
+                  style={[styles.loginButton, { marginTop: 15, paddingHorizontal: 16, backgroundColor: '#A05B39' }]}
+                  onPress={() => setCartItems([])}
+                >
+                  <Text style={styles.loginButtonText}>Clear Cart</Text>
+                </TouchableOpacity>
+              </>
             )}
           </View>
         )}
@@ -602,6 +638,64 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  cartContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+  },
+  emptyCartState: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyCartIcon: {
+    fontSize: 40,
+    marginBottom: 8,
+  },
+  emptyCartText: {
+    color: '#4F3F34',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  cartList: {
+    paddingBottom: 20,
+    gap: 10,
+  },
+  cartItem: {
+    flexDirection: 'row',
+    backgroundColor: '#FFFDFB',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E9DECF',
+    padding: 10,
+  },
+  cartItemImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 8,
+    marginRight: 12,
+  },
+  cartItemDetails: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  cartItemName: {
+    color: '#2C221E',
+    fontSize: 14,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  cartItemMeta: {
+    color: '#6F5944',
+    fontSize: 12,
+    marginBottom: 2,
+  },
+  cartItemPrice: {
+    color: '#A05B39',
+    fontSize: 14,
+    fontWeight: '700',
+    marginTop: 4,
   },
   productCard: {
     width: '48%',
