@@ -6,6 +6,7 @@ export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedColors, setSelectedColors] = useState({});
+  const [selectedSizes, setSelectedSizes] = useState({});
   const categories = ['All', 'Basketball', 'Running', 'Skate', 'High-Top'];
   const products = [
     {
@@ -265,6 +266,7 @@ export default function HomeScreen() {
             {products.map((product) => {
               const isSelected = selectedProduct === product.name;
               const selectedColor = selectedColors[product.name] || product.colors[0].name;
+              const selectedSize = selectedSizes[product.name];
 
               return (
                 <View key={product.name} style={styles.productCard}>
@@ -316,12 +318,16 @@ export default function HomeScreen() {
                         {product.sizes.map((size) => (
                           <TouchableOpacity
                             key={size}
-                            style={styles.sizeOption}
-                            onPress={() => {
-                              addToCart(product, size, selectedColor);
-                              setSelectedProduct(null);
-                              alert(`Added ${selectedColor} ${product.name} in size ${size} to cart`);
-                            }}
+                            style={[
+                              styles.sizeOption,
+                              selectedSize === size && styles.activeSizeOption,
+                            ]}
+                            onPress={() =>
+                              setSelectedSizes((current) => ({
+                                ...current,
+                                [product.name]: size,
+                              }))
+                            }
                           >
                             <Text style={styles.sizeOptionText}>{size}</Text>
                           </TouchableOpacity>
@@ -333,9 +339,14 @@ export default function HomeScreen() {
                   <TouchableOpacity
                     style={styles.productAddButton}
                     onPress={() => {
+                      if (selectedSize == null) {
+                        alert('Please select a size before adding this item to your cart.');
+                        return;
+                      }
+
                       const chosenColor = selectedColors[product.name] || product.colors[0].name;
-                      addToCart(product, null, chosenColor);
-                      alert(`Added ${chosenColor} ${product.name} to cart`);
+                      addToCart(product, selectedSize, chosenColor);
+                      alert(`Added ${chosenColor} ${product.name} in size ${selectedSize} to cart`);
                     }}
                   >
                     <Text style={styles.productAddText}>Add to cart</Text>
@@ -852,6 +863,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4EBDD',
     borderWidth: 1,
     borderColor: '#E2D5C2',
+  },
+  activeSizeOption: {
+    backgroundColor: '#E8D3BF',
+    borderColor: '#8D5E3C',
+    borderWidth: 2,
   },
   sizeOptionText: {
     color: '#2C221E',
