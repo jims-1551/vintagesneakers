@@ -134,9 +134,9 @@ export default function HomeScreen() {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerCopy}>
-          <Text style={styles.headerEyebrow}>VINTAGE SNEAKER ARCHIVE</Text>
+          <Text style={styles.headerEyebrow}>THE SNEAKER ARCHIVE</Text>
           <Text style={styles.headerTitle}>Vintage Store</Text>
-          <Text style={styles.headerSubtitle}>Rare finds. Everyday classics.</Text>
+          <Text style={styles.headerSubtitle}>Welcome to the Vintage Store</Text>
         </View>
 
         <TouchableOpacity
@@ -422,16 +422,16 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   cartButton: {
+    position: 'relative',
     width: 48,
     height: 48,
-    position: 'relative',
     backgroundColor: '#FFFDFB',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#E4A16F',
+    marginLeft: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 12,
   },
   cartText: {
     fontSize: 22,
