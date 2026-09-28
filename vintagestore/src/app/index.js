@@ -63,6 +63,17 @@ export default function HomeScreen() {
         { name: 'Pink', value: '#D89CB0' },
       ],
     },
+    {
+      name: 'Adidas Superstar',
+      price: '₱1400',
+      image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85',
+      sizes: [7, 8, 9, 10, 11],
+      colors: [
+        { name: 'White', value: '#F7F3EE' },
+        { name: 'Black', value: '#2C221E' },
+        { name: 'Blue', value: '#4F6E8E' },
+      ],
+    },
   ];
   // 1. DITO ILAGAY ANG MGA LOGIN STATES (Line 6)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
