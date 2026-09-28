@@ -76,11 +76,6 @@ export default function HomeScreen() {
       ],
     },
   ];
-  // 1. DITO ILAGAY ANG MGA LOGIN STATES (Line 6)
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
   // Navigation states (pure state tabs)
   const [activeTab, setActiveTab] = useState('Home');
   const [activeSubTab, setActiveSubTab] = useState(0);
@@ -133,70 +128,7 @@ export default function HomeScreen() {
     );
   };
 
-  // 2. DITO ILAGAY ANG LOGIN GATEKEEPER (Bago mag-return)
-  if (!isLoggedIn) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.loginWrap}>
-          <View style={styles.loginCard}>
-            <Text style={styles.logoBadge}>VS</Text>
-            <Text style={styles.title}>Vintage Store</Text>
-            <Text style={styles.subtitle}>Sign in to access exclusive VintageSneakers items</Text>
-
-            <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Email</Text>
-              <TextInput
-                style={styles.loginInput}
-                placeholder="Enter your email"
-                placeholderTextColor="#A89F91"
-                value={email}
-                onChangeText={setEmail}
-                autoCapitalize="none"
-                keyboardType="email-address"
-              />
-            </View>
-
-            <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Password</Text>
-              <TextInput
-                style={styles.loginInput}
-                placeholder="Enter your password"
-                placeholderTextColor="#A89F91"
-                secureTextEntry
-                value={password}
-                onChangeText={setPassword}
-              />
-            </View>
-
-            <TouchableOpacity style={styles.forgotButton}>
-              <Text style={styles.forgotText}>Forgot password?</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.loginButton}
-              onPress={() => {
-                if (email && password) {
-                  setIsLoggedIn(true);
-                } else {
-                  alert('Paki-lagay ang Email at Password');
-                }
-              }}
-            >
-              <Text style={styles.loginButtonText}>SIGN IN</Text>
-            </TouchableOpacity>
-
-            <View style={styles.footerRow}>
-              <Text style={styles.footerText}>New here?</Text>
-              <TouchableOpacity>
-                <Text style={styles.footerLink}>Create account</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </SafeAreaView>
-    );
-  }
-  // Main app screen(home,cart,profile)
+  // Main app screen(home,cart)
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
