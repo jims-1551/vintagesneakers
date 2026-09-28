@@ -223,7 +223,7 @@ export default function HomeScreen() {
         <TextInput
           style={styles.searchInput}
           placeholder="Maghanap ng vintage items..."
-          placeholderTextColor="#A89F91"
+          placeholderTextColor="#3B2418"
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
@@ -509,7 +509,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#8D5E3C',
+    backgroundColor: '#5A3825',
     borderWidth: 2,
     borderColor: '#FFFFFF',
     borderRadius: 12,
@@ -628,7 +628,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F8F3EE',
     marginHorizontal: 24,
     marginVertical: 12,
     paddingHorizontal: 16,
@@ -878,7 +878,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingVertical: 8,
     alignItems: 'center',
-    backgroundColor: '#2C221E',
+    backgroundColor: '#5A3825',
     borderRadius: 6,
   },
   productAddText: {
