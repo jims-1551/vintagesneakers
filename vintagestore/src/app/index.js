@@ -89,15 +89,47 @@ export default function HomeScreen() {
   const addToCart = (product, selectedSize = null, selectedColor = null) => {
     const chosenColor = selectedColor || selectedColors[product.name] || product.colors[0].name;
     const cartItem = {
-      id: `${product.name}-${chosenColor}-${selectedSize ?? 'default'}`,
+      id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
       productName: product.name,
       price: product.price,
       image: product.image,
       color: chosenColor,
       size: selectedSize,
+      baseProduct: product,
     };
 
     setCartItems((currentItems) => [...currentItems, cartItem]);
+  };
+
+  const deleteCartItem = (id) => {
+    setCartItems((currentItems) => currentItems.filter((item) => item.id !== id));
+  };
+
+  const editCartItem = (item) => {
+    if (!item.baseProduct) {
+      return;
+    }
+
+    const productColors = item.baseProduct.colors.map((color) => color.name);
+    const productSizes = item.baseProduct.sizes;
+    const currentColorIndex = productColors.indexOf(item.color);
+    const nextColor = productColors[(currentColorIndex + 1) % productColors.length];
+
+    const updatedSize = productSizes && productSizes.length > 0
+      ? productSizes[(productSizes.indexOf(item.size) + 1) % productSizes.length]
+      : item.size;
+
+    setCartItems((currentItems) =>
+      currentItems.map((cartItem) =>
+        cartItem.id === item.id
+          ? {
+              ...cartItem,
+              color: nextColor,
+              size: updatedSize,
+            }
+          : cartItem,
+      ),
+    );
   };
 
   // 2. DITO ILAGAY ANG LOGIN GATEKEEPER (Bago mag-return)
@@ -332,6 +364,22 @@ export default function HomeScreen() {
                         <Text style={styles.cartItemMeta}>Color: {item.color}</Text>
                         {item.size ? <Text style={styles.cartItemMeta}>Size: {item.size}</Text> : null}
                         <Text style={styles.cartItemPrice}>{item.price}</Text>
+
+                        <View style={styles.cartActions}>
+                          <TouchableOpacity
+                            style={styles.cartEditButton}
+                            onPress={() => editCartItem(item)}
+                          >
+                            <Text style={styles.cartActionText}>Edit</Text>
+                          </TouchableOpacity>
+
+                          <TouchableOpacity
+                            style={styles.cartDeleteButton}
+                            onPress={() => deleteCartItem(item.id)}
+                          >
+                            <Text style={styles.cartActionText}>Delete</Text>
+                          </TouchableOpacity>
+                        </View>
                       </View>
                     </View>
                   ))}
@@ -696,6 +744,30 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700',
     marginTop: 4,
+  },
+  cartActions: {
+    flexDirection: 'row',
+    marginTop: 10,
+    gap: 8,
+  },
+  cartEditButton: {
+    flex: 1,
+    backgroundColor: '#2C221E',
+    borderRadius: 8,
+    paddingVertical: 8,
+    alignItems: 'center',
+  },
+  cartDeleteButton: {
+    flex: 1,
+    backgroundColor: '#A05B39',
+    borderRadius: 8,
+    paddingVertical: 8,
+    alignItems: 'center',
+  },
+  cartActionText: {
+    color: '#FFFDFB',
+    fontSize: 12,
+    fontWeight: '700',
   },
   productCard: {
     width: '48%',
