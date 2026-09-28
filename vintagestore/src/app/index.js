@@ -12,7 +12,7 @@ export default function HomeScreen() {
       name: 'Red Nike Flyknit',
       price: '₱999',
       image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85',
-      sizes: [8, 9, 10, 11],
+      sizes: [5, 6, 7, 8, 9, 10, 11],
       colors: [
         { name: 'Red', value: '#2C221E' },
         { name: 'White', value: '#F7F3EE' },
@@ -23,7 +23,7 @@ export default function HomeScreen() {
       name: 'Nike Air Max',
       price: '₱1200',
       image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85',
-      sizes: [8, 9, 10, 11],
+      sizes: [5, 6, 7, 8, 9, 10, 11],
       colors: [
         { name: 'Blue', value: '#2C221E' },
         { name: 'Cream', value: '#EADCC6' },
@@ -34,7 +34,7 @@ export default function HomeScreen() {
       name: 'Air Jordan 1',
       price: '₱1200',
       image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=700&q=85',
-      sizes: [8, 9, 10, 11],
+      sizes: [5, 6, 7, 8, 9, 10, 11],
       colors: [
         { name: 'White', value: '#2C221E' },
         { name: 'Black', value: '#F7F3EE' },
@@ -45,7 +45,7 @@ export default function HomeScreen() {
       name: 'Puma Smash V2, Perforated Leather',
       price: '₱999',
       image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=700&q=85',
-      sizes: [8, 9, 10, 11],
+      sizes: [5, 6, 7, 8, 9, 10, 11],
       colors: [
         { name: 'Orange', value: '#2C221E' },
         { name: 'Green', value: '#F7F3EE' },
@@ -56,7 +56,7 @@ export default function HomeScreen() {
       name: 'Nike Sneaker',
       price: '₱1200',
       image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=700&q=85',
-      sizes: [8, 9, 10, 11],
+      sizes: [5, 6, 7, 8, 9, 10, 11],
       colors: [
         { name: 'Gold', value: '#2C221E' },
         { name: 'Navy', value: '#F7F3EE' },
@@ -67,7 +67,7 @@ export default function HomeScreen() {
       name: 'Adidas Superstar',
       price: '₱1400',
       image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85',
-      sizes: [7, 8, 9, 10, 11],
+      sizes: [5, 6, 7, 8, 9, 10, 11],
       colors: [
         { name: 'White', value: '#F7F3EE' },
         { name: 'Black', value: '#2C221E' },
