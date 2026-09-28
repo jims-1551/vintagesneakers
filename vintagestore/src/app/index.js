@@ -410,15 +410,7 @@ export default function HomeScreen() {
         {activeTab === 'User' && (
           <View style={styles.centerView}>
             <View style={styles.userAccountCard}>
-              <View style={styles.userHeaderRow}>
-                <Text style={styles.userAccountTitle}>User Account</Text>
-                <TouchableOpacity
-                  style={styles.userSettingsButton}
-                  onPress={() => alert('Settings opened')}
-                >
-                  <Text style={styles.userSettingsText}>⚙️</Text>
-                </TouchableOpacity>
-              </View>
+              <Text style={styles.userAccountTitle}>User Account</Text>
 
               <Text style={styles.userAccountInfo}>Member since 2026</Text>
 
@@ -904,29 +896,11 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     elevation: 5,
   },
-  userHeaderRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
   userAccountTitle: {
     fontSize: 20,
     fontWeight: '700',
     color: '#2C221E',
-  },
-  userSettingsButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#F4EBDD',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#E9DECF',
-  },
-  userSettingsText: {
-    fontSize: 20,
+    marginBottom: 10,
   },
   userAccountInfo: {
     fontSize: 14,
