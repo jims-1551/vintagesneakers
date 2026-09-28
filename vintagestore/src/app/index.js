@@ -133,9 +133,10 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <View>
+        <View style={styles.headerCopy}>
+          <Text style={styles.headerEyebrow}>VINTAGE SNEAKER ARCHIVE</Text>
           <Text style={styles.headerTitle}>Vintage Store</Text>
-          <Text style={styles.headerSubtitle}>Welcome to your shop</Text>
+          <Text style={styles.headerSubtitle}>Rare finds. Everyday classics.</Text>
         </View>
 
         <TouchableOpacity
@@ -387,13 +388,49 @@ const styles = StyleSheet.create({
     color: '#8C7A6B',
     marginTop: 4,
   },
+  header: {
+    minHeight: 132,
+    paddingHorizontal: 22,
+    paddingTop: 18,
+    paddingBottom: 22,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#2C221E',
+    borderBottomWidth: 4,
+    borderBottomColor: '#C66A3D',
+  },
+  headerCopy: {
+    flex: 1,
+    paddingRight: 12,
+  },
+  headerEyebrow: {
+    marginBottom: 7,
+    color: '#E4A16F',
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 1.4,
+  },
+  headerTitle: {
+    color: '#FFFDFB',
+    fontSize: 27,
+    fontWeight: '800',
+  },
+  headerSubtitle: {
+    marginTop: 4,
+    color: '#D8C8B8',
+    fontSize: 13,
+  },
   cartButton: {
+    width: 48,
+    height: 48,
     position: 'relative',
-    padding: 8,
     backgroundColor: '#FFFDFB',
-    borderRadius: 12,
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E9DECF',
+    borderColor: '#E4A16F',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginLeft: 12,
   },
   cartText: {
