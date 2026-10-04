@@ -1,18 +1,22 @@
 import { useState } from 'react';
 import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
+// Listahan ng mga category filter sa homepage tulad ng basketball, running, at skate.
 const categories = ['All', 'Basketball', 'Running', 'Skate', 'High-Top'];
+
+// Ang mga product na ginpapakita sa shop. Ang bawat item ay may pangalan, presyo, larawan, available sizes, at color options.
 const products = [
   {
     name: 'Red Nike Flyknit',
+    category: 'Running',
     price: '₱999',
     image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85',
     sizes: [5, 6, 7, 8, 9, 10, 11],
@@ -21,9 +25,15 @@ const products = [
       { name: 'White', value: '#F7F3EE' },
       { name: 'Black', value: '#ff4a02' },
     ],
+    details: [
+      { label: 'Style', value: 'Running' },
+      { label: 'Material', value: 'Flyknit mesh' },
+      { label: 'Condition', value: 'Very good' },
+    ],
   },
   {
     name: 'Nike Air Max',
+    category: 'Basketball',
     price: '₱1200',
     image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85',
     sizes: [5, 6, 7, 8, 9, 10, 11],
@@ -32,9 +42,15 @@ const products = [
       { name: 'Cream', value: '#EADCC6' },
       { name: 'Gray', value: '#817e7b' },
     ],
+    details: [
+      { label: 'Style', value: 'Lifestyle' },
+      { label: 'Material', value: 'Leather + air sole' },
+      { label: 'Condition', value: 'Excellent' },
+    ],
   },
   {
     name: 'Air Jordan 1',
+    category: 'Basketball',
     price: '₱1200',
     image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=700&q=85',
     sizes: [5, 6, 7, 8, 9, 10, 11],
@@ -43,9 +59,15 @@ const products = [
       { name: 'Black', value: '#F7F3EE' },
       { name: 'Brown', value: '#8D5E3C' },
     ],
+    details: [
+      { label: 'Style', value: 'High-top' },
+      { label: 'Material', value: 'Leather upper' },
+      { label: 'Condition', value: 'Collector grade' },
+    ],
   },
   {
     name: 'Puma Smash V2, Perforated Leather',
+    category: 'Skate',
     price: '₱999',
     image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=700&q=85',
     sizes: [5, 6, 7, 8, 9, 10, 11],
@@ -54,9 +76,15 @@ const products = [
       { name: 'Green', value: '#F7F3EE' },
       { name: 'Beige', value: '#D4B894' },
     ],
+    details: [
+      { label: 'Style', value: 'Skate' },
+      { label: 'Material', value: 'Perforated leather' },
+      { label: 'Condition', value: 'Good' },
+    ],
   },
   {
     name: 'Nike Sneaker',
+    category: 'High-Top',
     price: '₱1200',
     image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=700&q=85',
     sizes: [5, 6, 7, 8, 9, 10, 11],
@@ -65,9 +93,15 @@ const products = [
       { name: 'Navy', value: '#F7F3EE' },
       { name: 'Pink', value: '#D89CB0' },
     ],
+    details: [
+      { label: 'Style', value: 'Streetwear' },
+      { label: 'Material', value: 'Canvas + suede' },
+      { label: 'Condition', value: 'Lightly worn' },
+    ],
   },
   {
     name: 'Adidas Superstar',
+    category: 'Running',
     price: '₱1400',
     image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85',
     sizes: [5, 6, 7, 8, 9, 10, 11],
@@ -76,18 +110,35 @@ const products = [
       { name: 'Black', value: '#2C221E' },
       { name: 'Blue', value: '#4F6E8E' },
     ],
+    details: [
+      { label: 'Style', value: 'Classic' },
+      { label: 'Material', value: 'Leather shell' },
+      { label: 'Condition', value: 'Premium used' },
+    ],
   },
 ];
 
 export default function HomeScreen({ onAddToCart }) {
+  // Ginagamit para mag-type at mag-filter ng product sa search bar.
   const [searchQuery, setSearchQuery] = useState('');
+  // Kung aling category ang currently active, halimbawa: All o Running.
   const [activeCategory, setActiveCategory] = useState('All');
+  // Kung aling product card ang currently opened para makita ang option ng color/size.
   const [selectedProduct, setSelectedProduct] = useState(null);
+  // Nag-iimbak ng napiling kulay per product para ma-preserve ang state.
   const [selectedColors, setSelectedColors] = useState({});
+  // Nag-iimbak ng napiling size per product bago i-add sa cart.
   const [selectedSizes, setSelectedSizes] = useState({});
+
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory = activeCategory === 'All' || product.category === activeCategory;
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.trim().toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <View style={styles.container}>
+      {/* Search bar para maghanap ng item sa store. */}
       <View style={styles.searchContainer}>
         <Text style={styles.searchIconText}>🔍</Text>
         <TextInput
@@ -104,6 +155,7 @@ export default function HomeScreen({ onAddToCart }) {
         )}
       </View>
 
+      {/* Row ng category chips. Kapag pinindot, magbabago ang active category. */}
       <View style={styles.categoryRow}>
         {categories.map((category) => (
           <TouchableOpacity
@@ -120,88 +172,105 @@ export default function HomeScreen({ onAddToCart }) {
         ))}
       </View>
 
+      {/* Listahan ng products na naka-wrap sa ScrollView para scrollable ang page. */}
       <ScrollView contentContainerStyle={styles.productGrid} showsVerticalScrollIndicator={false}>
-        {products.map((product) => {
-          const isSelected = selectedProduct === product.name;
-          const selectedColor = selectedColors[product.name] || product.colors[0].name;
-          const selectedSize = selectedSizes[product.name];
+        {filteredProducts.length === 0 ? (
+          <Text style={styles.emptyState}>No shoes match your search.</Text>
+        ) : (
+          filteredProducts.map((product) => {
+            const isSelected = selectedProduct === product.name;
+            const selectedColor = selectedColors[product.name] || product.colors[0].name;
+            const selectedSize = selectedSizes[product.name];
 
-          return (
-            <View key={product.name} style={styles.productCard}>
-              <TouchableOpacity
-                activeOpacity={0.85}
-                onPress={() => setSelectedProduct(isSelected ? null : product.name)}
-              >
-                <Image
-                  source={{ uri: product.image }}
-                  style={styles.productImage}
-                  resizeMode="cover"
-                  accessibilityLabel={product.name}
-                />
-                <Text style={styles.productName}>{product.name}</Text>
-                <Text style={styles.productPrice}>{product.price}</Text>
-              </TouchableOpacity>
+            return (
+              <View key={product.name} style={styles.productCard}>
+                <TouchableOpacity
+                  activeOpacity={0.85}
+                  onPress={() => setSelectedProduct(isSelected ? null : product.name)}
+                >
+                  <Image
+                    source={{ uri: product.image }}
+                    style={styles.productImage}
+                    resizeMode="cover"
+                    accessibilityLabel={product.name}
+                  />
+                  <Text style={styles.productName}>{product.name}</Text>
+                  <Text style={styles.productPrice}>{product.price}</Text>
+                </TouchableOpacity>
 
-              {isSelected && (
-                <View style={styles.optionContainer}>
-                  <Text style={styles.sizeLabel}>Select color</Text>
-                  <View style={styles.colorRow}>
-                    {product.colors.map((color) => {
-                      const isActive = selectedColor === color.name;
+                {/* Kapag pinindot ang product card, ipinapakita ang color, size, at shoe details. */}
+                {isSelected && (
+                  <View style={styles.optionContainer}>
+                    <Text style={styles.sizeLabel}>Details</Text>
+                    <View style={styles.detailGrid}>
+                      {product.details.map((detail) => (
+                        <View key={detail.label} style={styles.detailItem}>
+                          <Text style={styles.detailLabel}>{detail.label}</Text>
+                          <Text style={styles.detailValue}>{detail.value}</Text>
+                        </View>
+                      ))}
+                    </View>
 
-                      return (
+                    <Text style={styles.sizeLabel}>Select color</Text>
+                    <View style={styles.colorRow}>
+                      {product.colors.map((color) => {
+                        const isActive = selectedColor === color.name;
+
+                        return (
+                          <TouchableOpacity
+                            key={color.name}
+                            style={[
+                              styles.colorOption,
+                              { backgroundColor: color.value },
+                              isActive && styles.activeColorOption,
+                            ]}
+                            onPress={() =>
+                              setSelectedColors((current) => ({ ...current, [product.name]: color.name }))
+                            }
+                            accessibilityLabel={`Choose ${color.name} color`}
+                          >
+                            {isActive && <Text style={styles.colorCheck}>✓</Text>}
+                          </TouchableOpacity>
+                        );
+                      })}
+                    </View>
+
+                    <Text style={styles.sizeLabel}>Select size</Text>
+                    <View style={styles.sizeRow}>
+                      {product.sizes.map((size) => (
                         <TouchableOpacity
-                          key={color.name}
-                          style={[
-                            styles.colorOption,
-                            { backgroundColor: color.value },
-                            isActive && styles.activeColorOption,
-                          ]}
+                          key={size}
+                          style={[styles.sizeOption, selectedSize === size && styles.activeSizeOption]}
                           onPress={() =>
-                            setSelectedColors((current) => ({ ...current, [product.name]: color.name }))
+                            setSelectedSizes((current) => ({ ...current, [product.name]: size }))
                           }
-                          accessibilityLabel={`Choose ${color.name} color`}
                         >
-                          {isActive && <Text style={styles.colorCheck}>✓</Text>}
+                          <Text style={styles.sizeOptionText}>{size}</Text>
                         </TouchableOpacity>
-                      );
-                    })}
+                      ))}
+                    </View>
                   </View>
+                )}
 
-                  <Text style={styles.sizeLabel}>Select size</Text>
-                  <View style={styles.sizeRow}>
-                    {product.sizes.map((size) => (
-                      <TouchableOpacity
-                        key={size}
-                        style={[styles.sizeOption, selectedSize === size && styles.activeSizeOption]}
-                        onPress={() =>
-                          setSelectedSizes((current) => ({ ...current, [product.name]: size }))
-                        }
-                      >
-                        <Text style={styles.sizeOptionText}>{size}</Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                </View>
-              )}
+                {/* Button na nagdadagdag ng napiling item sa cart. Dapat may selected size bago ma-add. */}
+                <TouchableOpacity
+                  style={styles.productAddButton}
+                  onPress={() => {
+                    if (selectedSize == null) {
+                      alert('Please select a size before adding this item to your cart.');
+                      return;
+                    }
 
-              <TouchableOpacity
-                style={styles.productAddButton}
-                onPress={() => {
-                  if (selectedSize == null) {
-                    alert('Please select a size before adding this item to your cart.');
-                    return;
-                  }
-
-                  onAddToCart(product, selectedSize, selectedColor);
-                  alert(`Added ${selectedColor} ${product.name} in size ${selectedSize} to cart`);
-                }}
-              >
-                <Text style={styles.productAddText}>Add to cart</Text>
-              </TouchableOpacity>
-            </View>
-          );
-        })}
+                    onAddToCart(product, selectedSize, selectedColor);
+                    alert(`Added ${selectedColor} ${product.name} in size ${selectedSize} to cart`);
+                  }}
+                >
+                  <Text style={styles.productAddText}>Add to cart</Text>
+                </TouchableOpacity>
+              </View>
+            );
+          })
+        )}
       </ScrollView>
     </View>
   );
@@ -264,6 +333,24 @@ const styles = StyleSheet.create({
   productName: { marginTop: 8, color: '#2C221E', fontSize: 13, fontWeight: '600' },
   productPrice: { marginTop: 3, color: '#A05B39', fontSize: 13, fontWeight: '700' },
   optionContainer: { marginTop: 10, paddingTop: 8, borderTopWidth: 1, borderTopColor: '#E9DECF' },
+  detailGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+    gap: 6,
+  },
+  detailItem: {
+    width: '31%',
+    paddingVertical: 6,
+    paddingHorizontal: 5,
+    backgroundColor: '#F7F1E9',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#EBDCC8',
+  },
+  detailLabel: { color: '#8A6F58', fontSize: 9, fontWeight: '600', marginBottom: 2 },
+  detailValue: { color: '#2C221E', fontSize: 9, fontWeight: '700' },
   sizeLabel: {
     color: '#6F5944',
     fontSize: 11,
@@ -303,6 +390,14 @@ const styles = StyleSheet.create({
   },
   activeSizeOption: { backgroundColor: '#E8D3BF', borderColor: '#8D5E3C', borderWidth: 2 },
   sizeOptionText: { color: '#2C221E', fontSize: 12, fontWeight: '700' },
+  emptyState: {
+    width: '100%',
+    paddingVertical: 24,
+    textAlign: 'center',
+    color: '#6F5944',
+    fontSize: 14,
+    fontWeight: '600',
+  },
   productAddButton: {
     marginTop: 8,
     paddingVertical: 8,

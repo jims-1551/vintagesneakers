@@ -1,5 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+// Bottom navigation tabs para lumipat sa Home at Cart screen.
 const tabs = [
   { name: 'Home', icon: '🏠' },
   { name: 'Cart', icon: '🛒' },
@@ -8,6 +9,7 @@ const tabs = [
 export default function StoreBottomNavigation({ activeTab, onChangeTab }) {
   return (
     <View style={styles.bottomNav}>
+      {/* Ipinapakita ang bawat tab at tinitingnan kung active ang selected tab. */}
       {tabs.map((tab) => {
         const isActive = activeTab === tab.name;
 

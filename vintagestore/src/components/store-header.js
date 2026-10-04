@@ -1,13 +1,16 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+// Header ng store. Nagpapakita ng brand name at cart button na may badge count.
 export default function StoreHeader({ cartCount, onOpenCart }) {
   return (
     <View style={styles.header}>
+      {/* Brand/intro section sa kaliwa ng header. */}
       <View style={styles.headerCopy}>
         <Text style={styles.headerEyebrow}>THE SNEAKER ARCHIVE</Text>
         <Text style={styles.headerTitle}>Vintage Store</Text>
         <Text style={styles.headerSubtitle}>Welcome to the Vintage Store</Text>
       </View>
+      {/* Cart button sa right. May badge na nagpapakita kung ilan ang items sa cart. */}
       <TouchableOpacity style={styles.cartButton} onPress={onOpenCart} accessibilityLabel="Open cart">
         <Text style={styles.cartText}>🛒</Text>
         <View style={styles.cartBadge}>

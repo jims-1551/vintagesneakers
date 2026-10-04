@@ -1,6 +1,9 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+// Screen na nagpapakita ng lahat ng item na napili sa cart.
+// May mga action para i-edit, i-delete, at i-clear ang buong cart.
 export default function CartScreen({ cartItems, onEditItem, onDeleteItem, onClearCart }) {
+  // Kun wara sulod ang cart, ipapakita ang empty state instead of list.
   if (cartItems.length === 0) {
     return (
       <View style={styles.emptyCartState}>
@@ -12,6 +15,7 @@ export default function CartScreen({ cartItems, onEditItem, onDeleteItem, onClea
 
   return (
     <View style={styles.container}>
+      {/* Scrollable list ng mga cart items. */}
       <ScrollView contentContainerStyle={styles.cartList} showsVerticalScrollIndicator={false}>
         {cartItems.map((item) => (
           <View key={item.id} style={styles.cartItem}>
@@ -21,6 +25,8 @@ export default function CartScreen({ cartItems, onEditItem, onDeleteItem, onClea
               <Text style={styles.cartItemMeta}>Color: {item.color}</Text>
               {item.size ? <Text style={styles.cartItemMeta}>Size: {item.size}</Text> : null}
               <Text style={styles.cartItemPrice}>{item.price}</Text>
+
+              {/* Mga action button para bagohon o tanggalon ang item sa cart. */}
               <View style={styles.cartActions}>
                 <TouchableOpacity style={styles.cartEditButton} onPress={() => onEditItem(item)}>
                   <Text style={styles.cartActionText}>Edit</Text>
@@ -36,6 +42,8 @@ export default function CartScreen({ cartItems, onEditItem, onDeleteItem, onClea
           </View>
         ))}
       </ScrollView>
+
+      {/* asya ini an code san cart button para tangalon an tanan na item sa cart */}
       <TouchableOpacity style={styles.clearButton} onPress={onClearCart}>
         <Text style={styles.clearButtonText}>Clear Cart</Text>
       </TouchableOpacity>
