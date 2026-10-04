@@ -9,6 +9,7 @@ import StoreHeader from '../components/store-header';
 export default function StoreScreen() {
   const [activeTab, setActiveTab] = useState('Home');
   const [cartItems, setCartItems] = useState([]);
+  const [editingSelection, setEditingSelection] = useState(null);
 
   const addToCart = (product, size, color) => {
     const cartItem = {
@@ -24,21 +25,39 @@ export default function StoreScreen() {
     setCartItems((currentItems) => [...currentItems, cartItem]);
   };
 
-  const editCartItem = (item) => {
+  const startEditCartItem = (item) => {
     if (!item.baseProduct) {
       return;
     }
 
-    const colors = item.baseProduct.colors.map((color) => color.name);
-    const sizes = item.baseProduct.sizes;
-    const nextColor = colors[(colors.indexOf(item.color) + 1) % colors.length];
-    const nextSize = sizes[(sizes.indexOf(item.size) + 1) % sizes.length];
+    setEditingSelection({
+      itemId: item.id,
+      color: item.color,
+      size: item.size,
+    });
+  };
 
+  const updateEditingSelection = (field, value) => {
+    setEditingSelection((current) => {
+      if (!current) {
+        return current;
+      }
+
+      return { ...current, [field]: value };
+    });
+  };
+
+  const saveCartItemEdit = (itemId, color, size) => {
     setCartItems((currentItems) =>
       currentItems.map((cartItem) =>
-        cartItem.id === item.id ? { ...cartItem, color: nextColor, size: nextSize } : cartItem,
+        cartItem.id === itemId ? { ...cartItem, color, size } : cartItem,
       ),
     );
+    setEditingSelection(null);
+  };
+
+  const cancelCartItemEdit = () => {
+    setEditingSelection(null);
   };
 
   return (
@@ -53,7 +72,11 @@ export default function StoreScreen() {
         ) : (
           <CartScreen
             cartItems={cartItems}
-            onEditItem={editCartItem}
+            editingSelection={editingSelection}
+            onEditItem={startEditCartItem}
+            onUpdateEditingSelection={updateEditingSelection}
+            onSaveEdit={saveCartItemEdit}
+            onCancelEdit={cancelCartItemEdit}
             onDeleteItem={(id) =>
               setCartItems((currentItems) => currentItems.filter((item) => item.id !== id))
             }
