@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 
 // Listahan ng mga category filter sa homepage tulad ng basketball, running, at skate.
-const categories = ['All', 'Basketball', 'Running', 'Skate', 'High-Top', 'Shorts', 'T-shirts', 'Jackets'];
+const categories = ['All', 'Sneakers', 'Shorts', 'T-shirts', 'Jackets'];
 
 // Ang mga product na ginpapakita sa shop. Ang bawat item ay may pangalan, presyo, larawan, available sizes, at color options.
 const products = [
   {
     name: 'Red Nike Flyknit',
-    category: 'Running',
+    category: 'Sneakers',
     price: '₱999',
     image: require('../../assets/images/rednike.jpg'),
     sizes: [5, 6, 7, 8, 9, 10, 11],
@@ -33,7 +33,7 @@ const products = [
   },
   {
     name: 'Nike Air Max',
-    category: 'Basketball',
+    category: 'Sneakers',
     price: '₱1200',
     image: require('../../assets/images/nikeairmax.avif'),
     sizes: [5, 6, 7, 8, 9, 10, 11],
@@ -50,7 +50,7 @@ const products = [
   },
   {
     name: 'Air Jordan 1',
-    category: 'Basketball',
+    category: 'Sneakers',
     price: '₱1200',
     image: require('../../assets/images/airjordan1.avif'),
     sizes: [5, 6, 7, 8, 9, 10, 11],
@@ -67,7 +67,7 @@ const products = [
   },
   {
     name: 'Puma Smash V2, Perforated Leather',
-    category: 'Skate',
+    category: 'Sneakers',
     price: '₱999',
     image: require('../../assets/images/puma.avif'),
     sizes: [ '5', '6', '7', '8', '9', '10', '11' ],
@@ -84,7 +84,7 @@ const products = [
   },
   {
     name: 'Nike Sneaker',
-    category: 'High-Top',
+    category: 'Sneakers',
     price: '₱1200',
     image: require('../../assets/images/nikessneak.jpg'),
     sizes: [5, 6, 7, 8, 9, 10, 11],
@@ -101,7 +101,7 @@ const products = [
   },
   {
     name: 'adidas superstar',
-    category: 'Running',
+    category: 'Sneakers',
     price: '₱1200',
     image: require('../../assets/images/adidass.avif'),
     sizes: [ '8' , '9', '10', '11' ],
