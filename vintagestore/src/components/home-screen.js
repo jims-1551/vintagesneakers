@@ -100,15 +100,15 @@ const products = [
     ],
   },
   {
-    name: 'adidas superstar',
-    category: 'Sneakers',
+    name: 'Jnco',
+    category: 'Pants',
     price: '₱1200',
-    image: require('../../assets/images/adidass.avif'),
-    sizes: [ '8' , '9', '10', '11' ],
+    image: require('../../assets/images/jnco.jpg'),
+    sizes: [ 'm' , 'l', 'xl' ],
     colors: [
       { name: 'White', value: '#F7F3EE' },
-      { name: 'Black', value: '#2C221E' },
-      { name: 'Blue', value: '#4F6E8E' },
+      { name: 'Black', value: '#551e08' },
+      { name: 'Blue', value: '#050a0f' },
     ],
     details: [
       { label: 'Style', value: 'Classic' },
