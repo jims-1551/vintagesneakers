@@ -120,7 +120,7 @@ const products = [
     name: 'Dbtk',
     category: 'T-shirts',
     price: '₱1200',
-    image: require('../../assets/images/adidass.avif'),
+    image: require('../../assets/images/dbtk.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
     colors: [
       { name: 'Cream', value: '#F5E8D1' },
