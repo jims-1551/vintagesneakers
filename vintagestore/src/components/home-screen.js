@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 // Listahan ng mga category filter sa homepage tulad ng basketball, running, at skate.
-const categories = ['All', 'Sneakers', 'Shorts', 'T-shirts', 'Jackets' , 'caps'];
+const categories = ['All', 'Sneakers', 'Shorts', 'T-shirts', 'Jackets' , 'caps' , 'Pants', 'watch'];
 
 // Ang mga product na ginpapakita sa shop. Ang bawat item ay may pangalan, presyo, larawan, available sizes, at color options.
 const products = [
