@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 // Listahan ng mga category filter sa homepage tulad ng basketball, running, at skate.
-const categories = ['All', 'Sneakers', 'Shorts', 'T-shirts', 'Jackets'];
+const categories = ['All', 'Sneakers', 'Shorts', 'T-shirts', 'Jackets' , 'caps'];
 
 // Ang mga product na ginpapakita sa shop. Ang bawat item ay may pangalan, presyo, larawan, available sizes, at color options.
 const products = [
@@ -222,7 +222,7 @@ const products = [
     name: 'Hassuru',
     category: 'Shorts',
     price: '₱499',
-    image: require('../../assets/images/dbtk.jpg'),
+    image: require('../../assets/images/hassuru.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
     colors: [
       { name: 'White', value: '#F7F3EE' },
@@ -236,10 +236,10 @@ const products = [
     ],
   },
   {
-    name: 'Plain Canvas Sneaker',
-    category: 'Sneakers',
+    name: 'Tambay v22',
+    category: 'caps',
     price: '₱1299',
-    image: require('../../assets/images/rednike.jpg'),
+    image: require('../../assets/images/tambay.jpg'),
     sizes: [5, 6, 7, 8, 9, 10, 11],
     colors: [
       { name: 'White', value: '#F7F3EE' },
