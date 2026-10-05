@@ -188,7 +188,7 @@ const products = [
     name: 'Pretiest',
     category: 'Jackets',
     price: '₱1500',
-    image: require('../../assets/images/rednike.jpg'),
+    image: require('../../assets/images/pretiest.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
     colors: [
       { name: 'Gray', value: '#9DA3A6' },
@@ -202,10 +202,10 @@ const products = [
     ],
   },
   {
-    name: 'Malaag ',
+    name: 'Malaag',
     category: 'T-shirts',
     price: '₱600',
-    image: require('../../assets/images/airjordan1.avif'),
+    image: require('../../assets/images/malaag.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
     colors: [
       { name: 'Silver', value: '#C4C7CB' },
