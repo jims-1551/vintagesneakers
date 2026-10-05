@@ -152,9 +152,9 @@ const products = [
   },
   {
     name: 'crave',
-    category: 'Shorts',
+    category: 'T-shirts',
     price: '₱799',
-    image: require('../../assets/images/puma.avif'),
+    image: require('../../assets/images/crave.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
     colors: [
       { name: 'Black', value: '#2C221E' },
