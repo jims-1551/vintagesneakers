@@ -218,6 +218,57 @@ const products = [
       { label: 'Condition', value: 'Premium' },
     ],
   },
+  {
+    name: 'Plain White Tee',
+    category: 'T-shirts',
+    price: '₱499',
+    image: require('../../assets/images/dbtk.jpg'),
+    sizes: [ 's', 'm', 'l', 'xl' ],
+    colors: [
+      { name: 'White', value: '#F7F3EE' },
+      { name: 'Black', value: '#2C221E' },
+      { name: 'Gray', value: '#8C8B8A' },
+    ],
+    details: [
+      { label: 'Style', value: 'Minimal' },
+      { label: 'Material', value: 'Cotton jersey' },
+      { label: 'Condition', value: 'New' },
+    ],
+  },
+  {
+    name: 'Plain Canvas Sneaker',
+    category: 'Sneakers',
+    price: '₱1299',
+    image: require('../../assets/images/rednike.jpg'),
+    sizes: [5, 6, 7, 8, 9, 10, 11],
+    colors: [
+      { name: 'White', value: '#F7F3EE' },
+      { name: 'Black', value: '#2C221E' },
+      { name: 'Tan', value: '#C7A77B' },
+    ],
+    details: [
+      { label: 'Style', value: 'Minimal' },
+      { label: 'Material', value: 'Canvas upper' },
+      { label: 'Condition', value: 'Very good' },
+    ],
+  },
+  {
+    name: 'Plain Overshirt',
+    category: 'Jackets',
+    price: '₱1599',
+    image: require('../../assets/images/pro.jpg'),
+    sizes: [ 's', 'm', 'l', 'xl' ],
+    colors: [
+      { name: 'Beige', value: '#D8C8AE' },
+      { name: 'Black', value: '#2C221E' },
+      { name: 'Olive', value: '#69765B' },
+    ],
+    details: [
+      { label: 'Style', value: 'Casual' },
+      { label: 'Material', value: 'Cotton twill' },
+      { label: 'Condition', value: 'Clean used' },
+    ],
+  },
 ];
 
 export default function HomeScreen({ onAddToCart }) {
