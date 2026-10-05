@@ -253,11 +253,11 @@ const products = [
     ],
   },
   {
-    name: 'Plain Overshirt',
-    category: 'Jackets',
+    name: 'Rolex Gold(two tone)',
+    category: 'watch',
     price: '₱1599',
-    image: require('../../assets/images/pro.jpg'),
-    sizes: [ 's', 'm', 'l', 'xl' ],
+    image: require('../../assets/images/relo.jpg'),
+    sizes: [ '39mm', '49mm' ],
     colors: [
       { name: 'Beige', value: '#D8C8AE' },
       { name: 'Black', value: '#2C221E' },
@@ -265,8 +265,8 @@ const products = [
     ],
     details: [
       { label: 'Style', value: 'Casual' },
-      { label: 'Material', value: 'Cotton twill' },
-      { label: 'Condition', value: 'Clean used' },
+      { label: 'Material', value: 'metal' },
+      { label: 'Condition', value: 'Brand new' },
     ],
   },
 ];
