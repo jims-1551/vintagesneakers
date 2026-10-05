@@ -137,7 +137,7 @@ const products = [
     name: 'los grasyas',
     category: 'Shorts',
     price: '₱699',
-    image: require('../../assets/images/nikeairmax.avif'),
+    image: require('../../assets/images/grasya.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
     colors: [
       { name: 'White', value: '#F7F3EE' },
