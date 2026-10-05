@@ -219,8 +219,8 @@ const products = [
     ],
   },
   {
-    name: 'Plain White Tee',
-    category: 'T-shirts',
+    name: 'Hassuru',
+    category: 'Shorts',
     price: '₱499',
     image: require('../../assets/images/dbtk.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
@@ -230,8 +230,8 @@ const products = [
       { name: 'Gray', value: '#8C8B8A' },
     ],
     details: [
-      { label: 'Style', value: 'Minimal' },
-      { label: 'Material', value: 'Cotton jersey' },
+      { label: 'Style', value: 'jorts' },
+      { label: 'Material', value: 'maong' },
       { label: 'Condition', value: 'New' },
     ],
   },
