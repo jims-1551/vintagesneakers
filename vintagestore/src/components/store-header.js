@@ -6,9 +6,8 @@ export default function StoreHeader({ cartCount, onOpenCart }) {
     <View style={styles.header}>
       {/* Brand/intro section sa kaliwa ng header. */}
       <View style={styles.headerCopy}>
-        <Text style={styles.headerEyebrow}>THE SNEAKER ARCHIVE</Text>
         <Text style={styles.headerTitle}>Vintage Store</Text>
-        <Text style={styles.headerSubtitle}>Welcome to the Vintage Store</Text>
+        <Text style={styles.headerSubtitle}>Welcome to the Sneakers&Streetwear</Text>
       </View>
       {/* Cart button sa right. May badge na nagpapakita kung ilan ang items sa cart. */}
       <TouchableOpacity style={styles.cartButton} onPress={onOpenCart} accessibilityLabel="Open cart">
