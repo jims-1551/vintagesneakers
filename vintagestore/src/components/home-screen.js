@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 // Listahan ng mga category filter sa homepage tulad ng basketball, running, at skate.
-const categories = ['All', 'Basketball', 'Running', 'Skate', 'High-Top'];
+const categories = ['All', 'Basketball', 'Running', 'Skate', 'High-Top', 'Shorts', 'T-shirts', 'Jackets'];
 
 // Ang mga product na ginpapakita sa shop. Ang bawat item ay may pangalan, presyo, larawan, available sizes, at color options.
 const products = [
@@ -18,7 +18,7 @@ const products = [
     name: 'Red Nike Flyknit',
     category: 'Running',
     price: '₱999',
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85',
+    image: require('../../assets/images/rednike.jpg'),
     sizes: [5, 6, 7, 8, 9, 10, 11],
     colors: [
       { name: 'Red', value: '#2C221E' },
@@ -35,7 +35,7 @@ const products = [
     name: 'Nike Air Max',
     category: 'Basketball',
     price: '₱1200',
-    image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85',
+    image: require('../../assets/images/nikeairmax.avif'),
     sizes: [5, 6, 7, 8, 9, 10, 11],
     colors: [
       { name: 'Blue', value: '#2C221E' },
@@ -52,7 +52,7 @@ const products = [
     name: 'Air Jordan 1',
     category: 'Basketball',
     price: '₱1200',
-    image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=700&q=85',
+    image: require('../../assets/images/airjordan1.avif'),
     sizes: [5, 6, 7, 8, 9, 10, 11],
     colors: [
       { name: 'White', value: '#2C221E' },
@@ -69,8 +69,8 @@ const products = [
     name: 'Puma Smash V2, Perforated Leather',
     category: 'Skate',
     price: '₱999',
-    image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=700&q=85',
-    sizes: [5, 6, 7, 8, 9, 10, 11],
+    image: require('../../assets/images/puma.avif'),
+    sizes: [ '5', '6', '7', '8', '9', '10', '11' ],
     colors: [
       { name: 'Orange', value: '#2C221E' },
       { name: 'Green', value: '#F7F3EE' },
@@ -86,7 +86,7 @@ const products = [
     name: 'Nike Sneaker',
     category: 'High-Top',
     price: '₱1200',
-    image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=700&q=85',
+    image: require('../../assets/images/nikessneak.jpg'),
     sizes: [5, 6, 7, 8, 9, 10, 11],
     colors: [
       { name: 'Gold', value: '#2C221E' },
@@ -100,11 +100,11 @@ const products = [
     ],
   },
   {
-    name: 'Adidas Superstar',
+    name: 'adidas superstar',
     category: 'Running',
-    price: '₱1400',
-    image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85',
-    sizes: [5, 6, 7, 8, 9, 10, 11],
+    price: '₱1200',
+    image: require('../../assets/images/adidass.avif'),
+    sizes: [ '8' , '9', '10', '11' ],
     colors: [
       { name: 'White', value: '#F7F3EE' },
       { name: 'Black', value: '#2C221E' },
@@ -112,8 +112,110 @@ const products = [
     ],
     details: [
       { label: 'Style', value: 'Classic' },
-      { label: 'Material', value: 'Leather shell' },
-      { label: 'Condition', value: 'Premium used' },
+      { label: 'Material', value: 'suede' },
+      { label: 'Condition', value: 'Excellent' },
+    ],
+  },
+  {
+    name: 'Dbtk',
+    category: 'T-shirts',
+    price: '₱1200',
+    image: require('../../assets/images/adidass.avif'),
+    sizes: [ 's', 'm', 'l', 'xl' ],
+    colors: [
+      { name: 'Cream', value: '#F5E8D1' },
+      { name: 'Black', value: '#2C221E' },
+      { name: 'Navy', value: '#243C5E' },
+    ],
+    details: [
+      { label: 'Style', value: 'gengs' },
+      { label: 'Material', value: 'cotton' },
+      { label: 'Condition', value: 'Good' },
+    ],
+  },
+  {
+    name: 'los grasyas',
+    category: 'Shorts',
+    price: '₱699',
+    image: require('../../assets/images/nikeairmax.avif'),
+    sizes: [ 's', 'm', 'l', 'xl' ],
+    colors: [
+      { name: 'White', value: '#F7F3EE' },
+      { name: 'Black', value: '#2C221E' },
+      { name: 'Grey', value: '#7B7A78' },
+    ],
+    details: [
+      { label: 'Style', value: 'gengs' },
+      { label: 'Material', value: 'Leather' },
+      { label: 'Condition', value: 'Very good' },
+    ],
+  },
+  {
+    name: 'crave',
+    category: 'Shorts',
+    price: '₱799',
+    image: require('../../assets/images/puma.avif'),
+    sizes: [ 's', 'm', 'l', 'xl' ],
+    colors: [
+      { name: 'Black', value: '#2C221E' },
+      { name: 'Cream', value: '#F7F3EE' },
+      { name: 'Brown', value: '#8A6644' },
+    ],
+    details: [
+      { label: 'Style', value: 'Skate' },
+      { label: 'Material', value: 'cotton' },
+      { label: 'Condition', value: 'Lightly worn' },
+    ],
+  },
+  {
+    name: 'Productive',
+    category: 'Jackets',
+    price: '₱1500',
+    image: require('../../assets/images/nikessneak.jpg'),
+    sizes: [ 's', 'm', 'l', 'xl' ],
+    colors: [
+      { name: 'White', value: '#F7F3EE' },
+      { name: 'Black', value: '#2C221E' },
+      { name: 'Red', value: '#B24E44' },
+    ],
+    details: [
+      { label: 'Style', value: 'gengs' },
+      { label: 'Material', value: 'cotton' },
+      { label: 'Condition', value: 'Clean used' },
+    ],
+  },
+  {
+    name: 'Pretiest',
+    category: 'Jackets',
+    price: '₱1500',
+    image: require('../../assets/images/rednike.jpg'),
+    sizes: [ 's', 'm', 'l', 'xl' ],
+    colors: [
+      { name: 'Gray', value: '#9DA3A6' },
+      { name: 'White', value: '#F7F3EE' },
+      { name: 'Blue', value: '#596D7E' },
+    ],
+    details: [
+      { label: 'Style', value: 'casual' },
+      { label: 'Material', value: 'Mesh' },
+      { label: 'Condition', value: 'Excellent' },
+    ],
+  },
+  {
+    name: 'Malaag ',
+    category: 'T-shirts',
+    price: '₱600',
+    image: require('../../assets/images/airjordan1.avif'),
+    sizes: [ 's', 'm', 'l', 'xl' ],
+    colors: [
+      { name: 'Silver', value: '#C4C7CB' },
+      { name: 'Black', value: '#2C221E' },
+      { name: 'Blue', value: '#3D5D86' },
+    ],
+    details: [
+      { label: 'Style', value: 'gengs' },
+      { label: 'Material', value: 'cotton' },
+      { label: 'Condition', value: 'Premium' },
     ],
   },
 ];
@@ -189,7 +291,7 @@ export default function HomeScreen({ onAddToCart }) {
                   onPress={() => setSelectedProduct(isSelected ? null : product.name)}
                 >
                   <Image
-                    source={{ uri: product.image }}
+                    source={product.image }
                     style={styles.productImage}
                     resizeMode="cover"
                     accessibilityLabel={product.name}

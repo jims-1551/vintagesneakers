@@ -36,7 +36,7 @@ export default function CartScreen({
 
           return (
             <View key={item.id} style={styles.cartItem}>
-              <Image source={{ uri: item.image }} style={styles.cartItemImage} resizeMode="cover" />
+              <Image source={ item.image } style={styles.cartItemImage} resizeMode="cover" />
               <View style={styles.cartItemDetails}>
                 <Text style={styles.cartItemName}>{item.productName}</Text>
                 <Text style={styles.cartItemMeta}>Color: {currentColor}</Text>
