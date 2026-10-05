@@ -83,10 +83,10 @@ const products = [
     ],
   },
   {
-    name: 'Nike Sneaker',
-    category: 'Sneakers',
+    name: 'Carhartt double knee work pant',
+    category: 'Pants',
     price: '₱1200',
-    image: require('../../assets/images/nikessneak.jpg'),
+    image: require('../../assets/images/carhartt.jpg'),
     sizes: [5, 6, 7, 8, 9, 10, 11],
     colors: [
       { name: 'Gold', value: '#2C221E' },
@@ -95,7 +95,7 @@ const products = [
     ],
     details: [
       { label: 'Style', value: 'Streetwear' },
-      { label: 'Material', value: 'Canvas + suede' },
+      { label: 'Material', value: 'maong' },
       { label: 'Condition', value: 'Lightly worn' },
     ],
   },
