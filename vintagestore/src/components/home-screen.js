@@ -140,9 +140,9 @@ const products = [
     image: require('../../assets/images/grasya.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
     colors: [
-      { name: 'White', value: '#F7F3EE' },
-      { name: 'Black', value: '#2C221E' },
-      { name: 'Grey', value: '#7B7A78' },
+      { name: 'White', value: '#075275' },
+      { name: 'Black', value: '#0c0502' },
+      { name: 'Grey', value: '#d4cab5' },
     ],
     details: [
       { label: 'Style', value: 'gengs' },
