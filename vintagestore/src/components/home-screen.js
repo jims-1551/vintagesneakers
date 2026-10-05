@@ -171,7 +171,7 @@ const products = [
     name: 'Productive',
     category: 'Jackets',
     price: '₱1500',
-    image: require('../../assets/images/nikessneak.jpg'),
+    image: require('../../assets/images/pro.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
     colors: [
       { name: 'White', value: '#F7F3EE' },
