@@ -9,7 +9,6 @@ export default function StoreHeader({ cartCount, onOpenCart }) {
         <Text style={styles.headerTitle}>Vintage Store</Text>
         <Text style={styles.headerSubtitle}>Welcome to the Sneakers&Streetwear</Text>
       </View>
-      {/* Cart button sa right. May badge na nagpapakita kung ilan ang items sa cart. */}
       <TouchableOpacity style={styles.cartButton} onPress={onOpenCart} accessibilityLabel="Open cart">
         <Text style={styles.cartText}>🛒</Text>
         <View style={styles.cartBadge}>
@@ -25,24 +24,24 @@ const styles = StyleSheet.create({
     minHeight: 132,
     paddingHorizontal: 22,
     paddingTop: 18,
-    paddingBottom: 22,
+    paddingBottom: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#2C221E',
-    borderBottomWidth: 4,
-    borderBottomColor: '#C66A3D',
+    borderBottomWidth: 1,
+    borderBottomColor: '#d6c6be',
   },
-  headerCopy: { flex: 1, paddingRight: 12 },
-  headerEyebrow: {
-    marginBottom: 7,
-    color: '#E4A16F',
-    fontSize: 10,
-    fontWeight: '700',
-    letterSpacing: 1.4,
+
+  headerCopy: {
+    flex: 1,
+    paddingRight: 12,
   },
+
   headerTitle: { color: '#FFFDFB', fontSize: 27, fontWeight: '800' },
   headerSubtitle: { marginTop: 4, color: '#D8C8B8', fontSize: 13 },
+  
+  //cartButton
   cartButton: {
     position: 'relative',
     width: 48,
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFDFB',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E4A16F',
+    borderColor: '#25201d',
     marginLeft: 12,
     justifyContent: 'center',
     alignItems: 'center',

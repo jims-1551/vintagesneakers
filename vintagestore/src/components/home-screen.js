@@ -4,13 +4,12 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 
 // Listahan ng mga category filter sa homepage tulad ng basketball, running, at skate.
-const categories = ['All', 'Sneakers', 'Shorts', 'T-shirts', 'Jackets' , 'caps' , 'Pants', 'watch'];
+const categories = ['All', 'Sneakers', 'Clothing', 'Accessories'];
 
 // Ang mga product na ginpapakita sa shop. Ang bawat item ay may pangalan, presyo, larawan, available sizes, at color options.
 const products = [
@@ -19,7 +18,7 @@ const products = [
     category: 'Sneakers',
     price: '₱999',
     image: require('../../assets/images/rednike.jpg'),
-    sizes: [5, 6, 7, 8, 9, 10, 11],
+    sizes: [ 8, 9, 10, 11],
     colors: [
       { name: 'Red', value: '#2C221E' },
       { name: 'White', value: '#F7F3EE' },
@@ -36,7 +35,7 @@ const products = [
     category: 'Sneakers',
     price: '₱1200',
     image: require('../../assets/images/nikeairmax.avif'),
-    sizes: [5, 6, 7, 8, 9, 10, 11],
+    sizes: [ 8, 9, 10, 11],
     colors: [
       { name: 'Blue', value: '#2C221E' },
       { name: 'Cream', value: '#EADCC6' },
@@ -53,7 +52,7 @@ const products = [
     category: 'Sneakers',
     price: '₱1200',
     image: require('../../assets/images/airjordan1.avif'),
-    sizes: [5, 6, 7, 8, 9, 10, 11],
+    sizes: [ 8, 9, 10, 11],
     colors: [
       { name: 'White', value: '#2C221E' },
       { name: 'Black', value: '#F7F3EE' },
@@ -66,11 +65,11 @@ const products = [
     ],
   },
   {
-    name: 'Puma Smash V2, Perforated Leather',
+    name: 'Puma Smash V2, Perforated',
     category: 'Sneakers',
     price: '₱999',
     image: require('../../assets/images/puma.avif'),
-    sizes: [ '5', '6', '7', '8', '9', '10', '11' ],
+    sizes: [ 8 , 9 , 10 , 11 ],
     colors: [
       { name: 'Orange', value: '#2C221E' },
       { name: 'Green', value: '#F7F3EE' },
@@ -84,10 +83,10 @@ const products = [
   },
   {
     name: 'Carhartt double knee work pant',
-    category: 'Pants',
+    category: 'Clothing',
     price: '₱1200',
     image: require('../../assets/images/carhartt.jpg'),
-    sizes: [5, 6, 7, 8, 9, 10, 11],
+    sizes: [ 8, 9, 10, 11],
     colors: [
       { name: 'Gold', value: '#2C221E' },
       { name: 'Navy', value: '#F7F3EE' },
@@ -101,7 +100,7 @@ const products = [
   },
   {
     name: 'Jnco',
-    category: 'Pants',
+    category: 'Clothing',
     price: '₱1200',
     image: require('../../assets/images/jnco.jpg'),
     sizes: [ 'm' , 'l', 'xl' ],
@@ -118,7 +117,7 @@ const products = [
   },
   {
     name: 'Dbtk',
-    category: 'T-shirts',
+    category: 'Clothing',
     price: '₱1200',
     image: require('../../assets/images/dbtk.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
@@ -135,7 +134,7 @@ const products = [
   },
   {
     name: 'los grasyas',
-    category: 'Shorts',
+    category: 'Clothing',
     price: '₱699',
     image: require('../../assets/images/grasya.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
@@ -152,7 +151,7 @@ const products = [
   },
   {
     name: 'crave',
-    category: 'T-shirts',
+    category: 'Clothing',
     price: '₱799',
     image: require('../../assets/images/crave.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
@@ -169,7 +168,7 @@ const products = [
   },
   {
     name: 'Productive',
-    category: 'Jackets',
+    category: 'Clothing',
     price: '₱1500',
     image: require('../../assets/images/pro.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
@@ -186,7 +185,7 @@ const products = [
   },
   {
     name: 'Pretiest',
-    category: 'Jackets',
+    category: 'Clothing',
     price: '₱1500',
     image: require('../../assets/images/pretiest.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
@@ -203,7 +202,7 @@ const products = [
   },
   {
     name: 'Malaag',
-    category: 'T-shirts',
+    category: 'Clothing',
     price: '₱600',
     image: require('../../assets/images/malaag.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
@@ -220,7 +219,7 @@ const products = [
   },
   {
     name: 'Hassuru',
-    category: 'Shorts',
+    category: 'Clothing',
     price: '₱499',
     image: require('../../assets/images/hassuru.jpg'),
     sizes: [ 's', 'm', 'l', 'xl' ],
@@ -237,10 +236,10 @@ const products = [
   },
   {
     name: 'Tambay v22',
-    category: 'caps',
+    category: 'Accessories',
     price: '₱1299',
     image: require('../../assets/images/tambay.jpg'),
-    sizes: [5, 6, 7, 8, 9, 10, 11],
+    sizes: [ 8, 9, 10, 11],
     colors: [
       { name: 'White', value: '#F7F3EE' },
       { name: 'Black', value: '#2C221E' },
@@ -254,7 +253,7 @@ const products = [
   },
   {
     name: 'Rolex Gold(two tone)',
-    category: 'watch',
+    category: 'Accessories',
     price: '₱1599',
     image: require('../../assets/images/relo.jpg'),
     sizes: [ '39mm', '49mm' ],
@@ -270,45 +269,26 @@ const products = [
     ],
   },
 ];
-
 export default function HomeScreen({ onAddToCart }) {
-  // Ginagamit para mag-type at mag-filter ng product sa search bar.
-  const [searchQuery, setSearchQuery] = useState('');
-  // Kung aling category ang currently active, halimbawa: All o Running.
+  // Kung aling category ang currently active, halimbawa: All o shoes.
   const [activeCategory, setActiveCategory] = useState('All');
-  // Kung aling product card ang currently opened para makita ang option ng color/size.
+
+  // Kung hain product card ang currently opened para makita ang option ng color/size.
   const [selectedProduct, setSelectedProduct] = useState(null);
-  // Nag-iimbak ng napiling kulay per product para ma-preserve ang state.
+
+  // Nag-iimbak san napiling color per product para ma-preserve ang state.
   const [selectedColors, setSelectedColors] = useState({});
-  // Nag-iimbak ng napiling size per product bago i-add sa cart.
+
+  // Nag-iimbak san napiling size per product bago i-add sa cart.
   const [selectedSizes, setSelectedSizes] = useState({});
 
   const filteredProducts = products.filter((product) => {
-    const matchesCategory = activeCategory === 'All' || product.category === activeCategory;
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.trim().toLowerCase());
-    return matchesCategory && matchesSearch;
+    return activeCategory === 'All' || product.category === activeCategory;
   });
 
   return (
     <View style={styles.container}>
-      {/* Search bar para maghanap ng item sa store. */}
-      <View style={styles.searchContainer}>
-        <Text style={styles.searchIconText}>🔍</Text>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Maghanap ng vintage items..."
-          placeholderTextColor="#3B2418"
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-        {searchQuery.length > 0 && (
-          <Text style={styles.clearText} onPress={() => setSearchQuery('')}>
-            ✕
-          </Text>
-        )}
-      </View>
-
-      {/* Row ng category chips. Kapag pinindot, magbabago ang active category. */}
+      {/* Row ng category. Kapag pinindot, magbabago ang active category. */}
       <View style={styles.categoryRow}>
         {categories.map((category) => (
           <TouchableOpacity
@@ -325,10 +305,10 @@ export default function HomeScreen({ onAddToCart }) {
         ))}
       </View>
 
-      {/* Listahan ng products na naka-wrap sa ScrollView para scrollable ang page. */}
+      {/* Listahan san products na naka-wrap sa ScrollView para scrollable ang page. */}
       <ScrollView contentContainerStyle={styles.productGrid} showsVerticalScrollIndicator={false}>
         {filteredProducts.length === 0 ? (
-          <Text style={styles.emptyState}>No shoes match your search.</Text>
+          <Text style={styles.emptyState}>No items found in this category.</Text>
         ) : (
           filteredProducts.map((product) => {
             const isSelected = selectedProduct === product.name;
@@ -337,12 +317,13 @@ export default function HomeScreen({ onAddToCart }) {
 
             return (
               <View key={product.name} style={styles.productCard}>
+                {/* toggle an kada product card kun gin click, magawas an color, size, at details san product */}
                 <TouchableOpacity
                   activeOpacity={0.85}
                   onPress={() => setSelectedProduct(isSelected ? null : product.name)}
                 >
                   <Image
-                    source={product.image }
+                    source={product.image}
                     style={styles.productImage}
                     resizeMode="cover"
                     accessibilityLabel={product.name}
@@ -351,7 +332,6 @@ export default function HomeScreen({ onAddToCart }) {
                   <Text style={styles.productPrice}>{product.price}</Text>
                 </TouchableOpacity>
 
-                {/* Kapag pinindot ang product card, ipinapakita ang color, size, at shoe details. */}
                 {isSelected && (
                   <View style={styles.optionContainer}>
                     <Text style={styles.sizeLabel}>Details</Text>
@@ -387,7 +367,6 @@ export default function HomeScreen({ onAddToCart }) {
                         );
                       })}
                     </View>
-
                     <Text style={styles.sizeLabel}>Select size</Text>
                     <View style={styles.sizeRow}>
                       {product.sizes.map((size) => (
@@ -405,12 +384,12 @@ export default function HomeScreen({ onAddToCart }) {
                   </View>
                 )}
 
-                {/* Button na nagdadagdag ng napiling item sa cart. Dapat may selected size bago ma-add. */}
+                {/* pag nag-add to cart, mag-alert kung walang napiling size bago idagdag sa cart */}
                 <TouchableOpacity
                   style={styles.productAddButton}
                   onPress={() => {
                     if (selectedSize == null) {
-                      alert('Please select a size before adding this item to your cart.');
+                      alert('Please select other option before adding this item to your cart.');
                       return;
                     }
 
@@ -429,42 +408,43 @@ export default function HomeScreen({ onAddToCart }) {
   );
 }
 
+// Mao ini didi an design sa kada component sa home screen, an kada component may kanya-kanya style.
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F8F3EE',
-    marginHorizontal: 24,
-    marginVertical: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#E6DFD5',
-    elevation: 2,
-  },
-  searchIconText: { marginRight: 10, fontSize: 16 },
-  searchInput: { flex: 1, fontSize: 15, color: '#2C221E' },
-  clearText: { fontSize: 16, color: '#8C7A6B', paddingHorizontal: 4 },
+
+  // Design sa kada category filter; nagbabago an text color kun active an filter.
   categoryRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
-    paddingHorizontal: 24,
-    paddingBottom: 12,
+    marginHorizontal: 50, 
+    marginVertical: 12,
+    padding: 12, 
+    backgroundColor: '#fffcfb', 
+    borderRadius: 40, 
+    borderWidth: 1,
+    borderColor: '#E9DECF', 
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  // Design sa kada category filter chip.
   categoryChip: {
     backgroundColor: '#F8F3EE',
     borderWidth: 1,
     borderColor: '#E2D5C2',
     borderRadius: 999,
-    paddingHorizontal: 14,
+    paddingHorizontal: 12,
     paddingVertical: 8,
   },
   activeCategoryChip: { backgroundColor: '#2C221E', borderColor: '#2C221E' },
   categoryText: { color: '#4F3F34', fontSize: 12, fontWeight: '600' },
   activeCategoryText: { color: '#FFFDFB' },
+  // Grid layout container san mga product sa ScrollView.
   productGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -473,8 +453,10 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 100,
   },
+
+  // Individual product card layout.
   productCard: {
-    width: '48%',
+    width: '100%',
     marginBottom: 12,
     padding: 8,
     backgroundColor: '#FFFDFB',
@@ -482,15 +464,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E9DECF',
   },
-  productImage: { width: '100%', height: 132, backgroundColor: '#EED7CB', borderRadius: 6 },
-  productName: { marginTop: 8, color: '#2C221E', fontSize: 13, fontWeight: '600' },
-  productPrice: { marginTop: 3, color: '#A05B39', fontSize: 13, fontWeight: '700' },
+
+  // Image design san mga product card.
+  productImage: { width: '100%', height: 300, backgroundColor: '#EED7CB', borderRadius: 6 },
+
+  // Design sa kada product name sa product card.
+  productName: { marginTop: 8, color: '#2C221E', fontSize: 20, fontWeight: '600' },
+
+  // Design sa kada product price sa product card.
+  productPrice: { marginTop: 3, color: '#A05B39', fontSize: 17, fontWeight: '700' },
+  // Design sa product option container na lumalabas kapag pinindot an product card.
   optionContainer: { marginTop: 10, paddingTop: 8, borderTopWidth: 1, borderTopColor: '#E9DECF' },
   detailGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: 12,
     gap: 6,
   },
   detailItem: {
@@ -502,8 +491,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#EBDCC8',
   },
-  detailLabel: { color: '#8A6F58', fontSize: 9, fontWeight: '600', marginBottom: 2 },
-  detailValue: { color: '#2C221E', fontSize: 9, fontWeight: '700' },
+  detailLabel: { color: '#8A6F58', fontSize: 15, fontWeight: '600', marginBottom: 2 },
+  detailValue: { color: '#2C221E', fontSize: 12, fontWeight: '700' },
+
+  // Design sa label ng bawat product option: color, size, at details.
   sizeLabel: {
     color: '#6F5944',
     fontSize: 11,
@@ -512,17 +503,25 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
+
+  // Design sa hilera ng color options sa product card.
   colorRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, gap: 6 },
+
+  // Design sa bawat color option.
   colorOption: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     borderWidth: 1,
     borderColor: '#E2D5C2',
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+  // Design kapag napili na ang isang color.
   activeColorOption: { borderWidth: 2, borderColor: '#2C221E', transform: [{ scale: 1.05 }] },
+
+  // Check mark sa loob ng napiling color option.
   colorCheck: {
     color: '#FFFDFB',
     fontSize: 11,
@@ -531,7 +530,11 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 2,
   },
+
+  // Hilera ng pagpili ng size.
   sizeRow: { flexDirection: 'row', justifyContent: 'space-between', gap: 6 },
+
+  // Design sa bawat size option sa product card.
   sizeOption: {
     flex: 1,
     alignItems: 'center',
@@ -541,8 +544,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E2D5C2',
   },
+  // Design sa napiling size option.
   activeSizeOption: { backgroundColor: '#E8D3BF', borderColor: '#8D5E3C', borderWidth: 2 },
+
+  // Text sa loob ng bawat size option.
   sizeOptionText: { color: '#2C221E', fontSize: 12, fontWeight: '700' },
+
+  // Ipinapakita kapag walang items sa active category.
   emptyState: {
     width: '100%',
     paddingVertical: 24,
@@ -551,6 +559,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
   },
+  // Button para idagdag sa cart.
   productAddButton: {
     marginTop: 8,
     paddingVertical: 8,
@@ -558,5 +567,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#5A3825',
     borderRadius: 6,
   },
-  productAddText: { color: '#FFFDFB', fontSize: 12, fontWeight: '700' },
+  // Text sa loob ng button para mag-add sa cart.
+  productAddText: { color: '#FFFDFB', fontSize: 15, fontWeight: '700' },
 });
