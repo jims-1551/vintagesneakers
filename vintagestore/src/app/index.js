@@ -15,13 +15,76 @@ export default function StoreScreen() {
     const cartItem = {
       id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
       productName: product.name,
-      price: product.price,
+      category: product.category,
+      unitPrice: Number(String(product.price).replace(/[^\d.]/g, '')),
       image: product.image,
+      availableColors: product.colors,
+      availableSizes: product.sizes,
       color,
       size,
+      quantity: 1,
     };
 
-    setCartItems((currentItems) => [...currentItems, cartItem]);
+    setCartItems((currentItems) => {
+      const matchingItem = currentItems.find(
+        (item) =>
+          item.productName === cartItem.productName &&
+          item.color === cartItem.color &&
+          item.size === cartItem.size
+      );
+
+      if (!matchingItem) {
+        return [...currentItems, cartItem];
+      }
+
+      return currentItems.map((item) =>
+        item.id === matchingItem.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+    });
+  };
+
+  const updateCartQuantity = (id, change) => {
+    setCartItems((currentItems) =>
+      currentItems.map((item) =>
+        item.id === id ? { ...item, quantity: Math.max(1, item.quantity + change) } : item
+      )
+    );
+  };
+
+  const editCartVariant = (id, color, size) => {
+    setCartItems((currentItems) => {
+      const editedItem = currentItems.find((item) => item.id === id);
+
+      if (!editedItem) {
+        return currentItems;
+      }
+
+      const matchingItem = currentItems.find(
+        (item) =>
+          item.id !== id &&
+          item.productName === editedItem.productName &&
+          item.color === color &&
+          item.size === size
+      );
+
+      if (matchingItem) {
+        return currentItems.flatMap((item) => {
+          if (item.id === id) {
+            return [];
+          }
+
+          if (item.id === matchingItem.id) {
+            return [{ ...item, quantity: item.quantity + editedItem.quantity }];
+          }
+
+          return [item];
+        });
+      }
+
+      return currentItems.map((item) =>
+        item.id === id ? { ...item, color, size } : item
+      );
+    });
   };
 
   return (
@@ -29,7 +92,7 @@ export default function StoreScreen() {
       <StoreHeader
         
         //ini an code para mahingadto an cart screen kun gin click an cart icon
-        cartCount={cartItems.length}
+        cartCount={cartItems.reduce((total, item) => total + item.quantity, 0)}
         onOpenCart={() => setActiveTab('Cart')}
       />
       <View style={styles.content}>
@@ -39,6 +102,9 @@ export default function StoreScreen() {
 
           <CartScreen
             cartItems={cartItems}
+            onUpdateQuantity={updateCartQuantity}
+            onEditVariant={editCartVariant}
+            onContinueShopping={() => setActiveTab('Home')}
             onDeleteItem={(id) =>
               setCartItems((currentItems) => currentItems.filter((item) => item.id !== id))
             }
