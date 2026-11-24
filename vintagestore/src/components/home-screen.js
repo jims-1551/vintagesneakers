@@ -8,6 +8,8 @@ import {
   View
 } from 'react-native';
 
+import SearchBar from './searchbar';
+
 // Listahan ng mga category filter sa homepage tulad ng basketball, running, at skate.
 const categories = ['All', 'Sneakers', 'Clothing', 'Accessories'];
 
@@ -272,6 +274,7 @@ const products = [
 export default function HomeScreen({ onAddToCart }) {
   // Kung aling category ang currently active, halimbawa: All o shoes.
   const [activeCategory, setActiveCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Kung hain product card ang currently opened para makita ang option ng color/size.
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -282,12 +285,31 @@ export default function HomeScreen({ onAddToCart }) {
   // Nag-iimbak san napiling size per product bago i-add sa cart.
   const [selectedSizes, setSelectedSizes] = useState({});
 
+  const normalizedQuery = searchQuery.trim().toLowerCase();
   const filteredProducts = products.filter((product) => {
-    return activeCategory === 'All' || product.category === activeCategory;
+    const matchesCategory =
+      activeCategory === 'All' || product.category === activeCategory;
+
+    if (!normalizedQuery) {
+      return matchesCategory;
+    }
+
+    const searchableText = [
+      product.name,
+      product.category,
+      product.price,
+      ...product.sizes.map(String),
+      ...product.colors.map((color) => color.name),
+      ...product.details.flatMap((detail) => [detail.label, detail.value]),
+    ].join(' ').toLowerCase();
+
+    return matchesCategory && searchableText.includes(normalizedQuery);
   });
 
   return (
     <View style={styles.container}>
+      <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
+
       {/* Row ng category. Kapag pinindot, magbabago ang active category. */}
       <View style={styles.categoryRow}>
         {categories.map((category) => (
@@ -308,7 +330,11 @@ export default function HomeScreen({ onAddToCart }) {
       {/* Listahan san products na naka-wrap sa ScrollView para scrollable ang page. */}
       <ScrollView contentContainerStyle={styles.productGrid} showsVerticalScrollIndicator={false}>
         {filteredProducts.length === 0 ? (
-          <Text style={styles.emptyState}>No items found in this category.</Text>
+          <Text style={styles.emptyState}>
+            {searchQuery.trim()
+              ? `No items found for "${searchQuery.trim()}".`
+              : 'No items found in this category.'}
+          </Text>
         ) : (
           filteredProducts.map((product) => {
             const isSelected = selectedProduct === product.name;

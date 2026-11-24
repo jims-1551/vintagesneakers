@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#2C221E',
     borderBottomWidth: 1,
-    borderBottomColor: '#d6c6be',
+    borderBottomColor: '#d6c6be', 
   },
 
   headerCopy: {
