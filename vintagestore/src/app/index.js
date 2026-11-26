@@ -6,12 +6,10 @@ import HomeScreen from '../components/home-screen';
 import SettingsScreen from '../components/settings-screen';
 import StoreBottomNavigation from '../components/store-bottom-navigation';
 import StoreHeader from '../components/store-header';
-import { useUserAccount } from '../components/user-account-context';
 
 const productCategories = ['All', 'Sneakers', 'Clothing', 'Accessories'];
 
 export default function StoreScreen() {
-  const { email, onSignOut } = useUserAccount();
   const [activeTab, setActiveTab] = useState('Home');
   const [cartItems, setCartItems] = useState([]);
   const [defaultCategory, setDefaultCategory] = useState('All');
@@ -109,8 +107,6 @@ export default function StoreScreen() {
             categories={productCategories}
             selectedCategory={defaultCategory}
             onSelectCategory={setDefaultCategory}
-            email={email}
-            onSignOut={onSignOut}
           />
         ) : (
 

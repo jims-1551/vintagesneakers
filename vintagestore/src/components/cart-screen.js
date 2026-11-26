@@ -1,5 +1,14 @@
 import { useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 export default function CartScreen({
   cartItems,
@@ -12,6 +21,7 @@ export default function CartScreen({
   const [editingItemId, setEditingItemId] = useState(null);
   const [draftColor, setDraftColor] = useState('');
   const [draftSize, setDraftSize] = useState(null);
+  const [checkoutVisible, setCheckoutVisible] = useState(false);
   const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   const subtotal = cartItems.reduce(
     (total, item) => total + item.unitPrice * item.quantity,
@@ -190,7 +200,72 @@ export default function CartScreen({
           <Text style={styles.totalLabel}>Total</Text>
           <Text style={styles.totalValue}>{formatPrice(subtotal)}</Text>
         </View>
+        <TouchableOpacity
+          style={[
+            styles.checkoutButton,
+            editingItemId !== null && styles.disabledCheckoutButton,
+          ]}
+          onPress={() => setCheckoutVisible(true)}
+          disabled={editingItemId !== null}
+          accessibilityRole="button">
+          <Text style={styles.checkoutButtonText}>Proceed to checkout</Text>
+        </TouchableOpacity>
       </View>
+
+      <Modal
+        visible={checkoutVisible}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setCheckoutVisible(false)}>
+        <View style={styles.checkoutBackdrop}>
+          <View style={styles.checkoutPanel}>
+            <View style={styles.checkoutHeader}>
+              <View>
+                <Text style={styles.checkoutTitle}>Checkout</Text>
+                <Text style={styles.checkoutSubtitle}>Review your selected items</Text>
+              </View>
+              <Pressable
+                onPress={() => setCheckoutVisible(false)}
+                accessibilityRole="button"
+                accessibilityLabel="Close checkout">
+                <Text style={styles.checkoutClose}>×</Text>
+              </Pressable>
+            </View>
+
+            <ScrollView
+              style={styles.checkoutItems}
+              showsVerticalScrollIndicator={false}>
+              {cartItems.map((item) => (
+                <View key={item.id} style={styles.checkoutItem}>
+                  <View style={styles.checkoutItemCopy}>
+                    <Text style={styles.checkoutItemName}>{item.productName}</Text>
+                    <Text style={styles.checkoutItemVariant}>
+                      {item.color} · Size {item.size} · Qty {item.quantity}
+                    </Text>
+                  </View>
+                  <Text style={styles.checkoutItemTotal}>
+                    {formatPrice(item.unitPrice * item.quantity)}
+                  </Text>
+                </View>
+              ))}
+            </ScrollView>
+
+            <View style={styles.checkoutTotalRow}>
+              <Text style={styles.totalLabel}>Total</Text>
+              <Text style={styles.totalValue}>{formatPrice(subtotal)}</Text>
+            </View>
+            <Text style={styles.checkoutNotice}>
+              Checkout preview only. Payment and order submission aren't connected yet.
+            </Text>
+            <TouchableOpacity
+              style={styles.checkoutBackButton}
+              onPress={() => setCheckoutVisible(false)}
+              accessibilityRole="button">
+              <Text style={styles.checkoutBackText}>Back to cart</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -362,4 +437,65 @@ const styles = StyleSheet.create({
   summaryDivider: { height: 1, backgroundColor: '#E9DECF', marginVertical: 10 },
   totalLabel: { color: '#2C221E', fontSize: 15, fontWeight: '800' },
   totalValue: { color: '#A05B39', fontSize: 18, fontWeight: '800' },
+  checkoutButton: {
+    minHeight: 48,
+    marginTop: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#5A3825',
+    borderRadius: 9,
+  },
+  checkoutButtonText: { color: '#FFFDFB', fontSize: 14, fontWeight: '700' },
+  disabledCheckoutButton: { opacity: 0.45 },
+  checkoutBackdrop: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(25, 18, 14, 0.48)',
+  },
+  checkoutPanel: {
+    maxHeight: '85%',
+    padding: 20,
+    backgroundColor: '#FFFDFB',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  checkoutHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  checkoutTitle: { color: '#2C221E', fontSize: 22, fontWeight: '800' },
+  checkoutSubtitle: { color: '#6F5944', fontSize: 13, marginTop: 3 },
+  checkoutClose: { color: '#6F5944', fontSize: 30, lineHeight: 32, paddingHorizontal: 6 },
+  checkoutItems: { flexGrow: 0, maxHeight: 300 },
+  checkoutItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E9DECF',
+  },
+  checkoutItemCopy: { flex: 1, paddingRight: 12 },
+  checkoutItemName: { color: '#2C221E', fontSize: 14, fontWeight: '700' },
+  checkoutItemVariant: { color: '#746355', fontSize: 12, marginTop: 5 },
+  checkoutItemTotal: { color: '#2C221E', fontSize: 13, fontWeight: '700' },
+  checkoutTotalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 16,
+  },
+  checkoutNotice: { color: '#8A7B6D', fontSize: 12, lineHeight: 18, marginTop: 12 },
+  checkoutBackButton: {
+    minHeight: 46,
+    marginTop: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 9,
+    borderWidth: 1,
+    borderColor: '#D8C8B8',
+  },
+  checkoutBackText: { color: '#5A3825', fontSize: 14, fontWeight: '700' },
 });
