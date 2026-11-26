@@ -31,7 +31,7 @@ export default function LoginPage({ onLogin, onBrowseAsGuest }) {
     }
 
     setError('');
-    onLogin();
+    onLogin(trimmedEmail);
   };
 
   return (

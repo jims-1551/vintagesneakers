@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-// Bottom navigation tabs para sa Home screen na lamang.
 const tabs = [
   { name: 'Home', icon: '🏠' },
+  { name: 'Settings', icon: '⚙️' },
 ];
 
 export default function StoreBottomNavigation({ activeTab, onChangeTab }) {

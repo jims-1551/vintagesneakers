@@ -271,9 +271,9 @@ const products = [
     ],
   },
 ];
-export default function HomeScreen({ onAddToCart }) {
+export default function HomeScreen({ onAddToCart, initialCategory = 'All' }) {
   // Kung aling category ang currently active, halimbawa: All o shoes.
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState('');
 
   // Kung hain product card ang currently opened para makita ang option ng color/size.

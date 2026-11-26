@@ -3,12 +3,18 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import CartScreen from '../components/cart-screen';
 import HomeScreen from '../components/home-screen';
+import SettingsScreen from '../components/settings-screen';
 import StoreBottomNavigation from '../components/store-bottom-navigation';
 import StoreHeader from '../components/store-header';
+import { useUserAccount } from '../components/user-account-context';
+
+const productCategories = ['All', 'Sneakers', 'Clothing', 'Accessories'];
 
 export default function StoreScreen() {
+  const { email, onSignOut } = useUserAccount();
   const [activeTab, setActiveTab] = useState('Home');
   const [cartItems, setCartItems] = useState([]);
+  const [defaultCategory, setDefaultCategory] = useState('All');
   
    //ini an code para mahingadto an product sa cart
   const addToCart = (product, size, color) => {
@@ -97,7 +103,15 @@ export default function StoreScreen() {
       />
       <View style={styles.content}>
         {activeTab === 'Home' ? (
-          <HomeScreen onAddToCart={addToCart} />
+          <HomeScreen onAddToCart={addToCart} initialCategory={defaultCategory} />
+        ) : activeTab === 'Settings' ? (
+          <SettingsScreen
+            categories={productCategories}
+            selectedCategory={defaultCategory}
+            onSelectCategory={setDefaultCategory}
+            email={email}
+            onSignOut={onSignOut}
+          />
         ) : (
 
           <CartScreen
