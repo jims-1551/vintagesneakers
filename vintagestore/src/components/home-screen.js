@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -419,13 +420,19 @@ export default function HomeScreen({
                   style={styles.productAddButton}
                   onPress={() => {
                     if (selectedSize == null) {
-                      alert('Please select other option before adding this item to your cart.');
+                        Alert.alert(
+                          'Select a size',
+                          'Please select a size before adding this item to your cart.'
+                        );
                       return;
                     }
 
                     onAddToCart(product, selectedSize, selectedColor).then((added) => {
                       if (added) {
-                        alert(`Added ${selectedColor} ${product.name} in size ${selectedSize} to cart`);
+                          Alert.alert(
+                            'Added to cart',
+                            `${selectedColor} ${product.name} in size ${selectedSize} was added to your cart.`
+                          );
                       }
                     });
                   }}

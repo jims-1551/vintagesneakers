@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "vintagestore_san_app_dd",
-    "slug": "vintagestore_san_app_dd",
+    "name": "Vintage Store",
+    "slug": "vintagestore",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "vintagestoresanappdd",
+    "scheme": "vintagestore",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"

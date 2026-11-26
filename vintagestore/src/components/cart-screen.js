@@ -35,9 +35,12 @@ export default function CartScreen({
     setDraftSize(item.size);
   };
 
-  const saveVariant = (itemId) => {
-    onEditVariant(itemId, draftColor, draftSize);
-    setEditingItemId(null);
+  const saveVariant = async (itemId) => {
+    const saved = await onEditVariant(itemId, draftColor, draftSize);
+
+    if (saved) {
+      setEditingItemId(null);
+    }
   };
 
   if (cartItems.length === 0) {

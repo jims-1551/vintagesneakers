@@ -2,6 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const tabs = [
   { name: 'Home', icon: '🏠' },
+  { name: 'Cart', icon: '🛒' },
   { name: 'Settings', icon: '⚙️' },
 ];
 
