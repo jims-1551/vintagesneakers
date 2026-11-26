@@ -22,6 +22,7 @@ export default function CartScreen({
   const [draftColor, setDraftColor] = useState('');
   const [draftSize, setDraftSize] = useState(null);
   const [checkoutVisible, setCheckoutVisible] = useState(false);
+  const [receipt, setReceipt] = useState(null);
   const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   const subtotal = cartItems.reduce(
     (total, item) => total + item.unitPrice * item.quantity,
@@ -39,6 +40,28 @@ export default function CartScreen({
   const saveVariant = (itemId) => {
     onEditVariant(itemId, draftColor, draftSize);
     setEditingItemId(null);
+  };
+
+  const completeDemoCheckout = () => {
+    setReceipt({
+      orderNumber: `VS-${Date.now().toString(36).toUpperCase()}`,
+      date: new Date().toLocaleString(),
+      items: cartItems.map((item) => ({
+        id: item.id,
+        productName: item.productName,
+        color: item.color,
+        size: item.size,
+        quantity: item.quantity,
+        total: item.unitPrice * item.quantity,
+      })),
+      total: subtotal,
+    });
+    setCheckoutVisible(false);
+  };
+
+  const closeReceipt = () => {
+    setReceipt(null);
+    onClearCart();
   };
 
   if (cartItems.length === 0) {
@@ -255,8 +278,14 @@ export default function CartScreen({
               <Text style={styles.totalValue}>{formatPrice(subtotal)}</Text>
             </View>
             <Text style={styles.checkoutNotice}>
-              Checkout preview only. Payment and order submission aren't connected yet.
+              Demo checkout only. No payment is taken and no order is submitted.
             </Text>
+            <TouchableOpacity
+              style={styles.completeCheckoutButton}
+              onPress={completeDemoCheckout}
+              accessibilityRole="button">
+              <Text style={styles.completeCheckoutText}>Complete demo checkout</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.checkoutBackButton}
               onPress={() => setCheckoutVisible(false)}
@@ -265,6 +294,54 @@ export default function CartScreen({
             </TouchableOpacity>
           </View>
         </View>
+      </Modal>
+
+      <Modal
+        visible={Boolean(receipt)}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setReceipt(null)}>
+        {receipt ? (
+          <View style={styles.checkoutBackdrop}>
+            <View style={styles.receiptPanel}>
+              <Text style={styles.receiptCheck}>✓</Text>
+              <Text style={styles.receiptTitle}>Your receipt</Text>
+              <Text style={styles.receiptDemoLabel}>DEMO RECEIPT — NOT A REAL ORDER</Text>
+              <Text style={styles.receiptMeta}>Order {receipt.orderNumber}</Text>
+              <Text style={styles.receiptMeta}>{receipt.date}</Text>
+
+              <ScrollView
+                style={styles.receiptItems}
+                showsVerticalScrollIndicator={false}>
+                {receipt.items.map((item) => (
+                  <View key={item.id} style={styles.checkoutItem}>
+                    <View style={styles.checkoutItemCopy}>
+                      <Text style={styles.checkoutItemName}>{item.productName}</Text>
+                      <Text style={styles.checkoutItemVariant}>
+                        {item.color} · Size {item.size} · Qty {item.quantity}
+                      </Text>
+                    </View>
+                    <Text style={styles.checkoutItemTotal}>{formatPrice(item.total)}</Text>
+                  </View>
+                ))}
+              </ScrollView>
+
+              <View style={styles.checkoutTotalRow}>
+                <Text style={styles.totalLabel}>Total</Text>
+                <Text style={styles.totalValue}>{formatPrice(receipt.total)}</Text>
+              </View>
+              <Text style={styles.checkoutNotice}>
+                No payment was taken and this order was not sent to the store.
+              </Text>
+              <TouchableOpacity
+                style={styles.completeCheckoutButton}
+                onPress={closeReceipt}
+                accessibilityRole="button">
+                <Text style={styles.completeCheckoutText}>Done</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : null}
       </Modal>
     </View>
   );
@@ -498,4 +575,50 @@ const styles = StyleSheet.create({
     borderColor: '#D8C8B8',
   },
   checkoutBackText: { color: '#5A3825', fontSize: 14, fontWeight: '700' },
+  completeCheckoutButton: {
+    minHeight: 46,
+    marginTop: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#5A3825',
+    borderRadius: 9,
+  },
+  completeCheckoutText: { color: '#FFFDFB', fontSize: 14, fontWeight: '700' },
+  receiptPanel: {
+    width: '100%',
+    maxWidth: 460,
+    maxHeight: '90%',
+    alignSelf: 'center',
+    padding: 22,
+    backgroundColor: '#FFFDFB',
+    borderRadius: 18,
+  },
+  receiptCheck: {
+    color: '#3D7256',
+    fontSize: 32,
+    fontWeight: '800',
+    textAlign: 'center',
+  },
+  receiptTitle: {
+    marginTop: 6,
+    color: '#2C221E',
+    fontSize: 22,
+    fontWeight: '800',
+    textAlign: 'center',
+  },
+  receiptDemoLabel: {
+    marginTop: 8,
+    color: '#A05B39',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 0.8,
+    textAlign: 'center',
+  },
+  receiptMeta: {
+    marginTop: 8,
+    color: '#746355',
+    fontSize: 12,
+    textAlign: 'center',
+  },
+  receiptItems: { flexGrow: 0, maxHeight: 260, marginTop: 16 },
 });
