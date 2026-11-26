@@ -1,26 +1,86 @@
-import { useState } from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import CartScreen from '../components/cart-screen';
-import HomeScreen from '../components/home-screen';
+import HomeScreen, { initialProducts } from '../components/home-screen';
 import SettingsScreen from '../components/settings-screen';
 import StoreBottomNavigation from '../components/store-bottom-navigation';
 import StoreHeader from '../components/store-header';
+import {
+  addCartItem as addStoredCartItem,
+  clearCart as clearStoredCart,
+  deleteCartItem as deleteStoredCartItem,
+  editCartVariant as editStoredCartVariant,
+  getCartItems,
+  getProducts,
+  initializeStoreDatabase,
+  updateCartQuantity as updateStoredCartQuantity,
+} from '../data/store-database';
 
 const productCategories = ['All', 'Sneakers', 'Clothing', 'Accessories'];
 
 export default function StoreScreen() {
   const [activeTab, setActiveTab] = useState('Home');
   const [cartItems, setCartItems] = useState([]);
+  const [products, setProducts] = useState([]);
   const [defaultCategory, setDefaultCategory] = useState('All');
+  const [databaseStatus, setDatabaseStatus] = useState('loading');
+  const [databaseError, setDatabaseError] = useState('');
+
+  const loadStore = useCallback(async () => {
+    await Promise.resolve();
+    setDatabaseStatus('loading');
+    setDatabaseError('');
+
+    try {
+      await initializeStoreDatabase(initialProducts);
+      const [storedProducts, storedCartItems] = await Promise.all([
+        getProducts(initialProducts),
+        getCartItems(initialProducts),
+      ]);
+      setProducts(storedProducts);
+      setCartItems(storedCartItems);
+      setDatabaseStatus('ready');
+    } catch (error) {
+      setDatabaseError(
+        error instanceof Error ? error.message : 'Could not open the local database.'
+      );
+      setDatabaseStatus('error');
+    }
+  }, []);
+
+  useEffect(() => {
+    Promise.resolve().then(loadStore);
+  }, [loadStore]);
+
+  const runCartMutation = async (operation) => {
+    try {
+      await operation();
+      setCartItems(await getCartItems(initialProducts));
+      setDatabaseError('');
+      return true;
+    } catch (error) {
+      setDatabaseError(
+        error instanceof Error ? error.message : 'Could not save your cart.'
+      );
+      return false;
+    }
+  };
   
-   //ini an code para mahingadto an product sa cart
   const addToCart = (product, size, color) => {
     const cartItem = {
       id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      productId: product.id,
       productName: product.name,
       category: product.category,
-      unitPrice: Number(String(product.price).replace(/[^\d.]/g, '')),
+      unitPrice: product.unitPrice,
       image: product.image,
       availableColors: product.colors,
       availableSizes: product.sizes,
@@ -29,79 +89,63 @@ export default function StoreScreen() {
       quantity: 1,
     };
 
-    setCartItems((currentItems) => {
-      const matchingItem = currentItems.find(
-        (item) =>
-          item.productName === cartItem.productName &&
-          item.color === cartItem.color &&
-          item.size === cartItem.size
-      );
-
-      if (!matchingItem) {
-        return [...currentItems, cartItem];
-      }
-
-      return currentItems.map((item) =>
-        item.id === matchingItem.id ? { ...item, quantity: item.quantity + 1 } : item
-      );
-    });
+    return runCartMutation(() => addStoredCartItem(cartItem));
   };
 
   const updateCartQuantity = (id, change) => {
-    setCartItems((currentItems) =>
-      currentItems.map((item) =>
-        item.id === id ? { ...item, quantity: Math.max(1, item.quantity + change) } : item
-      )
-    );
+    return runCartMutation(() => updateStoredCartQuantity(id, change));
   };
 
   const editCartVariant = (id, color, size) => {
-    setCartItems((currentItems) => {
-      const editedItem = currentItems.find((item) => item.id === id);
-
-      if (!editedItem) {
-        return currentItems;
-      }
-
-      const matchingItem = currentItems.find(
-        (item) =>
-          item.id !== id &&
-          item.productName === editedItem.productName &&
-          item.color === color &&
-          item.size === size
-      );
-
-      if (matchingItem) {
-        return currentItems.flatMap((item) => {
-          if (item.id === id) {
-            return [];
-          }
-
-          if (item.id === matchingItem.id) {
-            return [{ ...item, quantity: item.quantity + editedItem.quantity }];
-          }
-
-          return [item];
-        });
-      }
-
-      return currentItems.map((item) =>
-        item.id === id ? { ...item, color, size } : item
-      );
-    });
+    return runCartMutation(() => editStoredCartVariant(id, color, size));
   };
+
+  if (databaseStatus === 'loading') {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.statusContent}>
+          <ActivityIndicator color="#5A3825" />
+          <Text style={styles.statusText}>Loading your local store database...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (databaseStatus === 'error') {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.statusContent}>
+          <Text style={styles.errorTitle}>Could not load the store database</Text>
+          <Text style={styles.errorText}>{databaseError}</Text>
+          <TouchableOpacity
+            style={styles.retryButton}
+            onPress={loadStore}
+            accessibilityRole="button">
+            <Text style={styles.retryButtonText}>Try again</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <StoreHeader
-        
-        //ini an code para mahingadto an cart screen kun gin click an cart icon
         cartCount={cartItems.reduce((total, item) => total + item.quantity, 0)}
         onOpenCart={() => setActiveTab('Cart')}
       />
+      {databaseError ? (
+        <Text style={styles.inlineError} accessibilityRole="alert">
+          Could not save cart changes: {databaseError}
+        </Text>
+      ) : null}
       <View style={styles.content}>
         {activeTab === 'Home' ? (
-          <HomeScreen onAddToCart={addToCart} initialCategory={defaultCategory} />
+          <HomeScreen
+            onAddToCart={addToCart}
+            initialCategory={defaultCategory}
+            products={products}
+          />
         ) : activeTab === 'Settings' ? (
           <SettingsScreen
             categories={productCategories}
@@ -115,10 +159,8 @@ export default function StoreScreen() {
             onUpdateQuantity={updateCartQuantity}
             onEditVariant={editCartVariant}
             onContinueShopping={() => setActiveTab('Home')}
-            onDeleteItem={(id) =>
-              setCartItems((currentItems) => currentItems.filter((item) => item.id !== id))
-            }
-            onClearCart={() => setCartItems([])}
+            onDeleteItem={(id) => runCartMutation(() => deleteStoredCartItem(id))}
+            onClearCart={() => runCartMutation(clearStoredCart)}
           />
         )}
       </View>
@@ -130,4 +172,28 @@ export default function StoreScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F4EBDD' },
   content: { flex: 1 },
+  statusContent: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  statusText: { marginTop: 12, color: '#6F5944', fontSize: 14 },
+  errorTitle: { color: '#2C221E', fontSize: 18, fontWeight: '700', textAlign: 'center' },
+  errorText: { marginTop: 10, color: '#A12A24', fontSize: 13, textAlign: 'center' },
+  retryButton: {
+    marginTop: 18,
+    paddingHorizontal: 20,
+    paddingVertical: 11,
+    backgroundColor: '#5A3825',
+    borderRadius: 8,
+  },
+  retryButtonText: { color: '#FFFDFB', fontWeight: '700' },
+  inlineError: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    color: '#A12A24',
+    backgroundColor: '#FBE9E7',
+    fontSize: 12,
+  },
 });

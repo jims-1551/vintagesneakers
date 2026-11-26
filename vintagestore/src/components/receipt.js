@@ -9,6 +9,8 @@ import {
   View,
 } from 'react-native';
 
+import { saveOrder } from '../data/store-database';
+
 const PAYMENT_METHOD = 'Cash on Delivery (COD)';
 
 export default function CheckoutFlow({
@@ -19,15 +21,36 @@ export default function CheckoutFlow({
 }) {
   const [checkoutVisible, setCheckoutVisible] = useState(false);
   const [receipt, setReceipt] = useState(null);
+  const [checkoutBusy, setCheckoutBusy] = useState(false);
+  const [checkoutError, setCheckoutError] = useState('');
+  const [receiptError, setReceiptError] = useState('');
 
-  const completeDemoCheckout = () => {
-    setReceipt(createReceipt(cartItems, PAYMENT_METHOD));
-    setCheckoutVisible(false);
+  const completeDemoCheckout = async () => {
+    setCheckoutBusy(true);
+    setCheckoutError('');
+
+    try {
+      const savedReceipt = await saveOrder(cartItems, PAYMENT_METHOD);
+      setReceipt(savedReceipt);
+      setCheckoutVisible(false);
+    } catch (error) {
+      setCheckoutError(
+        error instanceof Error ? error.message : 'Could not save this order locally.'
+      );
+    } finally {
+      setCheckoutBusy(false);
+    }
   };
 
-  const finishReceipt = () => {
-    setReceipt(null);
-    onClearCart();
+  const finishReceipt = async () => {
+    setReceiptError('');
+    const cleared = await onClearCart();
+
+    if (cleared) {
+      setReceipt(null);
+    } else {
+      setReceiptError('Could not clear the cart from this device. Please try again.');
+    }
   };
 
   return (
@@ -98,13 +121,25 @@ export default function CheckoutFlow({
               <Text style={styles.totalValue}>{formatPrice(subtotal)}</Text>
             </View>
             <Text style={styles.checkoutNotice}>
-              Demo checkout only. No payment is taken and no order is submitted.
+              Local demo checkout. The order is saved on this device only; no payment is
+              taken and no delivery is arranged.
             </Text>
+            {checkoutError ? (
+              <Text style={styles.checkoutError} accessibilityRole="alert">
+                Could not save order: {checkoutError}
+              </Text>
+            ) : null}
             <TouchableOpacity
-              style={styles.completeCheckoutButton}
+              style={[
+                styles.completeCheckoutButton,
+                checkoutBusy && styles.disabledCheckoutButton,
+              ]}
               onPress={completeDemoCheckout}
+              disabled={checkoutBusy}
               accessibilityRole="button">
-              <Text style={styles.completeCheckoutText}>Complete demo checkout</Text>
+              <Text style={styles.completeCheckoutText}>
+                {checkoutBusy ? 'Saving order…' : 'Complete demo checkout'}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.checkoutBackButton}
@@ -118,33 +153,18 @@ export default function CheckoutFlow({
 
       <ReceiptModal
         receipt={receipt}
-        onClose={() => setReceipt(null)}
+        error={receiptError}
+        onClose={() => {
+          setReceiptError('');
+          setReceipt(null);
+        }}
         onDone={finishReceipt}
       />
     </>
   );
 }
 
-function createReceipt(cartItems, paymentMethod) {
-  const items = cartItems.map((item) => ({
-    id: item.id,
-    productName: item.productName,
-    color: item.color,
-    size: item.size,
-    quantity: item.quantity,
-    total: item.unitPrice * item.quantity,
-  }));
-
-  return {
-    orderNumber: `VS-${Date.now().toString(36).toUpperCase()}`,
-    date: new Date().toLocaleString(),
-    paymentMethod,
-    items,
-    total: items.reduce((total, item) => total + item.total, 0),
-  };
-}
-
-function ReceiptModal({ receipt, onClose, onDone }) {
+function ReceiptModal({ receipt, error, onClose, onDone }) {
   if (!receipt) {
     return null;
   }
@@ -188,8 +208,13 @@ function ReceiptModal({ receipt, onClose, onDone }) {
             <Text style={styles.totalValue}>{formatPrice(receipt.total)}</Text>
           </View>
           <Text style={styles.checkoutNotice}>
-            Demo receipt only. COD payment and order delivery are not active.
+            Saved locally for reference only. COD payment and order delivery are not active.
           </Text>
+          {error ? (
+            <Text style={styles.checkoutError} accessibilityRole="alert">
+              {error}
+            </Text>
+          ) : null}
           <TouchableOpacity
             style={styles.completeCheckoutButton}
             onPress={onDone}
@@ -296,6 +321,7 @@ const styles = StyleSheet.create({
   totalLabel: { color: '#2C221E', fontSize: 15, fontWeight: '800' },
   totalValue: { color: '#A05B39', fontSize: 18, fontWeight: '800' },
   checkoutNotice: { color: '#8A7B6D', fontSize: 12, lineHeight: 18, marginTop: 12 },
+  checkoutError: { color: '#A12A24', fontSize: 12, lineHeight: 18, marginTop: 8 },
   checkoutBackButton: {
     minHeight: 46,
     marginTop: 18,

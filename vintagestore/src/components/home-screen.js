@@ -14,7 +14,7 @@ import SearchBar from './searchbar';
 const categories = ['All', 'Sneakers', 'Clothing', 'Accessories'];
 
 // Ang mga product na ginpapakita sa shop. Ang bawat item ay may pangalan, presyo, larawan, available sizes, at color options.
-const products = [
+export const initialProducts = [
   {
     name: 'Red Nike Flyknit',
     category: 'Sneakers',
@@ -271,7 +271,11 @@ const products = [
     ],
   },
 ];
-export default function HomeScreen({ onAddToCart, initialCategory = 'All' }) {
+export default function HomeScreen({
+  onAddToCart,
+  initialCategory = 'All',
+  products = initialProducts,
+}) {
   // Kung aling category ang currently active, halimbawa: All o shoes.
   const [activeCategory, setActiveCategory] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState('');
@@ -419,8 +423,11 @@ export default function HomeScreen({ onAddToCart, initialCategory = 'All' }) {
                       return;
                     }
 
-                    onAddToCart(product, selectedSize, selectedColor);
-                    alert(`Added ${selectedColor} ${product.name} in size ${selectedSize} to cart`);
+                    onAddToCart(product, selectedSize, selectedColor).then((added) => {
+                      if (added) {
+                        alert(`Added ${selectedColor} ${product.name} in size ${selectedSize} to cart`);
+                      }
+                    });
                   }}
                 >
                   <Text style={styles.productAddText}>Add to cart</Text>
